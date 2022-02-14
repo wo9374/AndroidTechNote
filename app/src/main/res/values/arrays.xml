@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ex_array">
+        <item>카테고리1</item>
+        <item>카테고리2</item>
+        <item>카테고리3</item>
+        <item>카테고리4</item>
+        <item>카테고리5</item>
+        <item>카테고리6</item>
+    </string-array>
+</resources>

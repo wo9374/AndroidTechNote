@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.example.androidtechnote.recycler.paging3.contentresolver.PhotoItem" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivGallery"
+            setImg="@{item.imgDataPath}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="6dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@mipmap/ic_launcher_round" />
+
+        <ImageView
+            android:id="@+id/ivCheck"
+            onOffMulti="@{item.onOffCheck}"
+            setCheck="@{item.checkBoolean}"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="14dp"
+            android:src="@drawable/selector_item_pgcr"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

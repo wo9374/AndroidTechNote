@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/firstHomeScreen">
+
+    <fragment
+        android:id="@+id/firstHomeScreen"
+        android:name="com.example.androidtechnote.navigation.FirstHomeScreen" >
+        <action
+            android:id="@+id/action_firstHomeScreen_to_secondHomeScreen"
+            app:destination="@id/secondHomeScreen" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/secondHomeScreen"
+        android:name="com.example.androidtechnote.navigation.SecondHomeScreen" >
+        <action
+            android:id="@+id/action_secondHomeScreen_to_thirdHomeScreen"
+            app:destination="@id/thirdHomeScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/thirdHomeScreen"
+        android:name="com.example.androidtechnote.navigation.ThirdHomeScreen">
+        <action
+            android:id="@+id/action_thirdHomeScreen_to_firstHomeScreen"
+            app:popUpTo="@id/firstHomeScreen" />
+    </fragment>
+</navigation>

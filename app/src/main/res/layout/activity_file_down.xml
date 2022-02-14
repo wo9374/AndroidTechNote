@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".myworkmanager.videodown.FileDownActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txt_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Video_List"
+            android:textSize="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/all_btn"
+            app:layout_constraintEnd_toStartOf="@+id/all_btn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/all_btn" />
+
+        <Button
+            android:id="@+id/all_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="All Down"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/gray"
+            app:layout_constraintTop_toBottomOf="@+id/all_btn"
+            tools:layout_editor_absoluteX="10dp">
+
+            <ImageView
+                android:id="@+id/imgView1"
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/progress1"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="14dp"
+                android:scaleY="2"
+                app:layout_constraintBottom_toTopOf="@id/txt1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgView1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgView1"
+                app:layout_constraintTop_toBottomOf="@+id/progress1" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray"
+            app:layout_constraintTop_toBottomOf="@+id/constLayout1"
+            tools:layout_editor_absoluteX="10dp">
+
+            <ImageView
+                android:id="@+id/imgView2"
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/progress2"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="14dp"
+                android:scaleY="2"
+                app:layout_constraintBottom_toTopOf="@id/txt2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgView2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgView2"
+                app:layout_constraintTop_toBottomOf="@+id/progress2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray"
+            app:layout_constraintTop_toBottomOf="@+id/constLayout2"
+            tools:layout_editor_absoluteX="10dp">
+
+            <ImageView
+                android:id="@+id/imgView3"
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ProgressBar
+                android:id="@+id/progress3"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginTop="14dp"
+                android:scaleY="2"
+                app:layout_constraintBottom_toTopOf="@id/txt3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgView3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="8dp"
+                android:gravity="center_horizontal"
+                android:textColor="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imgView3"
+                app:layout_constraintTop_toBottomOf="@+id/progress3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <VideoView
+            android:id="@+id/vv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginVertical="20dp"
+            app:layout_constraintDimensionRatio="9:5"
+            app:layout_constraintTop_toBottomOf="@+id/constLayout3"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

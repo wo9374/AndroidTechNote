@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.androidtechnote">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera.any" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <application
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AndroidTechNote"
+        android:usesCleartextTraffic="true">
+
+        <activity android:name="com.example.androidtechnote.room.view.RoomDbActivity"/>
+        <activity android:name="com.example.androidtechnote.room.view.AddActivity"/>
+
+        <activity
+            android:name="com.example.androidtechnote.coordinator.CoordinatorActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <activity
+            android:name="com.example.androidtechnote.camera.camerakit_library.CameraXActivity"
+            android:theme="@style/CameraTheme" />
+
+        <activity android:name="com.example.androidtechnote.recycler.paging3.PagingActivity" />
+        <activity android:name="com.example.androidtechnote.recycler.paging3.contentresolver.PgCrActivity" />
+        <activity android:name="com.example.androidtechnote.recycler.paging3.retrofit.PgRetrofitActivity" />
+        <activity android:name="com.example.androidtechnote.recycler.paging3.basicforloop.PgBasicActivity" />
+
+        <activity android:name="com.example.androidtechnote.myworkmanager.WorkManagerActivity" />
+        <activity android:name="com.example.androidtechnote.myworkmanager.videodown.FileDownActivity" />
+        <activity android:name="com.example.androidtechnote.myworkmanager.basicwork.BasicWorkManagerActivity" />
+
+        <activity android:name="com.example.androidtechnote.navigation.NavigationActivity" />
+
+        <activity
+            android:name="com.example.androidtechnote.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

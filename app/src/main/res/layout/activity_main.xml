@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="callBack"
+            type="com.example.androidtechnote.MainActivity.Callback" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <Button
+            android:id="@+id/navi_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{callBack::onClick}"
+            android:text="navigation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/coordinator_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{callBack::onClick}"
+            android:text="coordinator"
+            app:layout_constraintStart_toEndOf="@+id/navi_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/work_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{callBack::onClick}"
+            android:text="work"
+            app:layout_constraintStart_toEndOf="@+id/coordinator_btn"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/paging_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{callBack::onClick}"
+            android:text="paging"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/navi_btn" />
+
+        <Button
+            android:id="@+id/camera_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{callBack::onClick}"
+            android:text="camera"
+            app:layout_constraintStart_toEndOf="@+id/paging_btn"
+            app:layout_constraintTop_toTopOf="@+id/paging_btn" />
+
+        <Button
+            android:id="@+id/room_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{callBack::onClick}"
+            android:text="Room"
+            app:layout_constraintStart_toEndOf="@+id/camera_btn"
+            app:layout_constraintTop_toBottomOf="@+id/navi_btn" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

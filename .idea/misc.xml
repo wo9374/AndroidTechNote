@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidStudioProjects/AndroidTechNote/app/src/main/res/layout/item_test.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/drawable/ic_launcher_background.xml" value="0.3697916666666667" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/activity_add.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/activity_concat_recycler.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/activity_coordinator.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/activity_main.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/activity_navigation.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/activity_paging.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/activity_room_db.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/item_horizontal.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/item_horizontal_wrapper.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/item_one_column.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/item_paging_retrofit.xml" value="0.1734375" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/item_pgcr.xml" value="0.10833333333333334" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/item_test.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/item_todo.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/item_two_column.xml" value="0.3536458333333333" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/layout/screen_two_depth.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidStudioProjects/SeminaJetpack/JetpackSemina/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.3619791666666667" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
