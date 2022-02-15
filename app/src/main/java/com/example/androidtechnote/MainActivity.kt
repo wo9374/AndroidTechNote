@@ -13,6 +13,7 @@ import com.example.androidtechnote.coordinator.CoordinatorActivity
 import com.example.androidtechnote.databinding.ActivityMainBinding
 import com.example.androidtechnote.myworkmanager.WorkManagerActivity
 import com.example.androidtechnote.navigation.NavigationActivity
+import com.example.androidtechnote.recycler.epoxy.EpoxyActivity
 import com.example.androidtechnote.recycler.paging3.PagingActivity
 import com.example.androidtechnote.room.view.RoomDbActivity
 
@@ -47,6 +48,7 @@ class MainActivity : AppCompatActivity() {
                 binding.pagingBtn.id -> intent = Intent(applicationContext, PagingActivity::class.java)
                 binding.cameraBtn.id -> intent = Intent(applicationContext, CameraXActivity::class.java)
                 binding.roomBtn.id -> intent = Intent(applicationContext, RoomDbActivity::class.java )
+                binding.epoxyBtn.id -> intent = Intent(applicationContext, EpoxyActivity::class.java )
             }
             startActivity(intent)
         }

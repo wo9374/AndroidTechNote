@@ -3,4 +3,6 @@
     <string name="title_menu_first">1st</string>
     <string name="title_menu_second">2nd</string>
     <string name="title_menu_third">3rd</string>
+
+    <string name="title_test_epoxy_desx">에폭시 라이브러리 테스트</string>
 </resources>

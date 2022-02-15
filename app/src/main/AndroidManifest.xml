@@ -20,31 +20,27 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidTechNote"
         android:usesCleartextTraffic="true">
-
-        <activity android:name="com.example.androidtechnote.room.view.RoomDbActivity"/>
-        <activity android:name="com.example.androidtechnote.room.view.AddActivity"/>
-
         <activity
-            android:name="com.example.androidtechnote.coordinator.CoordinatorActivity"
+            android:name=".recycler.epoxy.EpoxyActivity"
+            android:exported="false" />
+        <activity android:name=".room.view.RoomDbActivity" />
+        <activity android:name=".room.view.AddActivity" />
+        <activity
+            android:name=".coordinator.CoordinatorActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-
         <activity
-            android:name="com.example.androidtechnote.camera.camerakit_library.CameraXActivity"
+            android:name=".camera.camerakit_library.CameraXActivity"
             android:theme="@style/CameraTheme" />
-
-        <activity android:name="com.example.androidtechnote.recycler.paging3.PagingActivity" />
-        <activity android:name="com.example.androidtechnote.recycler.paging3.contentresolver.PgCrActivity" />
-        <activity android:name="com.example.androidtechnote.recycler.paging3.retrofit.PgRetrofitActivity" />
-        <activity android:name="com.example.androidtechnote.recycler.paging3.basicforloop.PgBasicActivity" />
-
-        <activity android:name="com.example.androidtechnote.myworkmanager.WorkManagerActivity" />
-        <activity android:name="com.example.androidtechnote.myworkmanager.videodown.FileDownActivity" />
-        <activity android:name="com.example.androidtechnote.myworkmanager.basicwork.BasicWorkManagerActivity" />
-
-        <activity android:name="com.example.androidtechnote.navigation.NavigationActivity" />
-
+        <activity android:name=".recycler.paging3.PagingActivity" />
+        <activity android:name=".recycler.paging3.contentresolver.PgCrActivity" />
+        <activity android:name=".recycler.paging3.retrofit.PgRetrofitActivity" />
+        <activity android:name=".recycler.paging3.basicforloop.PgBasicActivity" />
+        <activity android:name=".myworkmanager.WorkManagerActivity" />
+        <activity android:name=".myworkmanager.videodown.FileDownActivity" />
+        <activity android:name=".myworkmanager.basicwork.BasicWorkManagerActivity" />
+        <activity android:name=".navigation.NavigationActivity" />
         <activity
-            android:name="com.example.androidtechnote.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
