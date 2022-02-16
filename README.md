@@ -4,9 +4,11 @@ Camera
 
 CoordinatorLatout
 
-Databindging
+Databinding
 
 Kotlin Ktor
+
+MVVM
 
 Navigation
 
