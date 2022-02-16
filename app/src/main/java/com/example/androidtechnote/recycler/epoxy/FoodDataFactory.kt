@@ -1,6 +1,5 @@
 package com.example.androidtechnote.recycler.epoxy
 
-import android.annotation.SuppressLint
 import androidx.annotation.StringRes
 import com.example.androidtechnote.R
 import com.example.androidtechnote.recycler.epoxy.model.Food
@@ -10,7 +9,6 @@ object FoodDataFactory{
 
     //랜덤 생성
     private val random = Random()
-
     private val titles = arrayListOf<String>("Nachos", "Fries", "Cheese Balls", "Pizza")
 
     private fun randomTitle() : String {
@@ -38,7 +36,7 @@ object FoodDataFactory{
         repeat(count){
             val image = randomPicture()
             val title = randomTitle()
-            @StringRes val desc = R.string.title_test_epoxy_desx.toString()
+            @StringRes val desc = "test,,,,"
             foodItems.add(Food(image,title,desc))
         }
         return foodItems

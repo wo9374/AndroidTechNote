@@ -12,22 +12,24 @@ class EpoxyActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityEpoxyBinding
 
-    private val singleFoodController : SingleFoodController by lazy{ SingleFoodController() }
+    private val testController : SingleFoodController by lazy{ SingleFoodController() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_epoxy)
 
-        val linearLayoutManager = LinearLayoutManager(this)
+        initRecycler()
+    }
 
+    private fun initRecycler(){
+        val linearLayoutManager = LinearLayoutManager(this)
         binding.epoxyRecycler.apply {
             layoutManager = linearLayoutManager
             setHasFixedSize(true)
-            adapter = singleFoodController.adapter
+            adapter = testController.adapter
             addItemDecoration(DividerItemDecoration(this@EpoxyActivity, linearLayoutManager.orientation))
         }
 
-        //This statement builds model and add it to the recycler view
-        singleFoodController.requestModelBuild()
+        testController.requestModelBuild()
     }
 }
