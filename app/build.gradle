@@ -37,7 +37,15 @@ android {
 
     buildFeatures{
         dataBinding = true
+
+        //Compose 추가
+        //compose true
     }
+
+    /*//Compose 추가
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.0.5'
+    }*/
 
     //Epoxy 추가
     kapt {
@@ -97,9 +105,40 @@ dependencies {
     implementation 'androidx.activity:activity-ktx:1.3.1'*/
 
     // Airbnb Epoxy
-    implementation "com.airbnb.android:epoxy:5.0.0-beta05"
+    implementation "com.airbnb.android:epoxy:3.7.0"
+    kapt "com.airbnb.android:epoxy-processor:3.7.0"
+
     // Epoxy Databinding
-    implementation "com.airbnb.android:epoxy-databinding:5.0.0-beta05"
-    //implementation 'com.airbnb.android:epoxy-paging:4.1.0'
-    kapt "com.airbnb.android:epoxy-processor:5.0.0-beta05"
+    implementation "com.airbnb.android:epoxy-databinding:3.7.0"
+
+    //Ktor(Http Client)
+    implementation "io.ktor:ktor-client-core:1.6.1"
+    implementation "io.ktor:ktor-client-cio:1.6.1"
+    implementation "io.ktor:ktor-client-gson:1.6.1"
+
+
+    //Compose
+    /*implementation "androidx.compose.ui:ui:1.1.0"
+
+    implementation 'androidx.activity:activity-compose:1.4.0'       // Integration with activities
+
+    implementation "androidx.compose.material:material:1.1.0"      // Compose Material Design
+    implementation "androidx.compose.material:material-icons-core:1.1.0"
+    implementation "androidx.compose.material:material-icons-extended:1.1.0"
+
+    implementation 'androidx.compose.animation:animation:1.1.0'     // Animations
+
+    implementation "androidx.compose.ui:ui-tooling:1.1.0"           // Tooling support (Previews, etc.)
+
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-alpha02' // Integration with ViewModels
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.0")  // UI Tests
+
+
+
+    implementation("androidx.compose.foundation:foundation:1.1.0")  // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    // Integration with observables
+    implementation("androidx.compose.runtime:runtime-livedata:1.1.0")
+    implementation("androidx.compose.runtime:runtime-rxjava2:1.1.0")*/
+
+
 }

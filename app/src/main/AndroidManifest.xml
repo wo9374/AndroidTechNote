@@ -21,6 +21,9 @@
         android:theme="@style/Theme.AndroidTechNote"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ktor.KtorActivity"
+            android:exported="false" />
+        <activity
             android:name=".recycler.epoxy.EpoxyActivity"
             android:exported="false" />
         <activity android:name=".room.view.RoomDbActivity" />

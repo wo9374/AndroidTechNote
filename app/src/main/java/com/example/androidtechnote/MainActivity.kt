@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.androidtechnote.camera.camerakit_library.CameraXActivity
 import com.example.androidtechnote.coordinator.CoordinatorActivity
 import com.example.androidtechnote.databinding.ActivityMainBinding
+import com.example.androidtechnote.ktor.KtorActivity
 import com.example.androidtechnote.myworkmanager.WorkManagerActivity
 import com.example.androidtechnote.navigation.NavigationActivity
 import com.example.androidtechnote.recycler.epoxy.EpoxyActivity
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
                 binding.cameraBtn.id -> intent = Intent(applicationContext, CameraXActivity::class.java)
                 binding.roomBtn.id -> intent = Intent(applicationContext, RoomDbActivity::class.java )
                 binding.epoxyBtn.id -> intent = Intent(applicationContext, EpoxyActivity::class.java )
+                binding.ktorBtn.id -> intent = Intent(applicationContext, KtorActivity::class.java )
             }
             startActivity(intent)
         }
