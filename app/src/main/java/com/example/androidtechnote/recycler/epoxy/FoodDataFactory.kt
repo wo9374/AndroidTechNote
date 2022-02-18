@@ -32,12 +32,12 @@ object FoodDataFactory{
     }
 
     fun getFoodItems(count:Int) : List<Food>{
-        var foodItems = mutableListOf<Food>()
+        val foodItems = mutableListOf<Food>()
         repeat(count){
             val image = randomPicture()
             val title = randomTitle()
-            @StringRes val desc = "test,,,,"
-            foodItems.add(Food(image,title,desc))
+            val desc = "test,,,," //@StringRes 지움
+            foodItems.add( Food(image,title,desc) )
         }
         return foodItems
     }

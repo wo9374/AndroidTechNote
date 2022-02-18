@@ -14,12 +14,13 @@ class SingleFoodController : EpoxyController(){
     override fun buildModels() {
         var i:Long =0
 
-        foodItems.forEach {food ->
-            /*SingleFoodModel_()
+        /*foodItems.forEach {food ->
+            SingleFoodModel_()
                 .id(i++)
                 .image(food.image)
                 .title(food.title)
-                .addTo(this)*/
-        }
+                .desc(food.description)
+                .addTo(this)
+        }*/
     }
 }
