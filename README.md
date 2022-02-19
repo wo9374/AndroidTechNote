@@ -13,8 +13,10 @@ MVVM
 Navigation
 
 RecyclerView
- Epoxy (보류)
+ Epoxy
+ 
  Paging3 - Local, ContentResolver, Retrofit
+ 
 
 Room
 
