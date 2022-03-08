@@ -21,6 +21,9 @@
         android:theme="@style/Theme.AndroidTechNote"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".viewpager2.ViewPager2Activity"
+            android:exported="false" />
+        <activity
             android:name=".ktor.KtorActivity"
             android:exported="false" />
         <activity

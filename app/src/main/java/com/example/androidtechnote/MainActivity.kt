@@ -17,6 +17,7 @@ import com.example.androidtechnote.navigation.NavigationActivity
 import com.example.androidtechnote.recycler.epoxy.EpoxyActivity
 import com.example.androidtechnote.recycler.paging3.PagingActivity
 import com.example.androidtechnote.room.view.RoomDbActivity
+import com.example.androidtechnote.viewpager2.ViewPager2Activity
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         //onClick interface Set
         binding.callBack = callBack
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     interface Callback{
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
                 binding.roomBtn.id -> intent = Intent(applicationContext, RoomDbActivity::class.java )
                 binding.epoxyBtn.id -> intent = Intent(applicationContext, EpoxyActivity::class.java )
                 binding.ktorBtn.id -> intent = Intent(applicationContext, KtorActivity::class.java )
+                binding.viewpagerBtn.id -> intent = Intent(applicationContext, ViewPager2Activity::class.java )
             }
             startActivity(intent)
         }
