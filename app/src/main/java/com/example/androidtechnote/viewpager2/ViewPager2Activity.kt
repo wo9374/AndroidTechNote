@@ -39,11 +39,11 @@ class ViewPager2Activity : AppCompatActivity() {
         }
 
         //Int.MAX_VALUE 절반만 해줄시 index 가 중간 data를 보여주므로 - size/2 (소수점 올림)만큼 함
-        bannerPosition.run {
-            Int.MAX_VALUE / 2 - ceil(list.size.toDouble() / 2).toInt()
-        }
+        bannerPosition= Int.MAX_VALUE / 2 - ceil(list.size.toDouble() / 2).toInt()
 
         viewPagerInit(binding.viewPager, list)
+
+        //Indicator 무한스크롤 사용시엔 disable
         //binding.dotsIndicator.setViewPager2(binding.viewPager)
 
         binding.txtCurrentBanner.text = getString(R.string.viewpager2_banner, 1, list.size)
@@ -55,7 +55,7 @@ class ViewPager2Activity : AppCompatActivity() {
             setCurrentItem(bannerPosition, false)
             orientation = ViewPager2.ORIENTATION_HORIZONTAL //스크롤 manipulate
 
-            //setPageTransformer(ZoomOutPageTransformer())
+            setPageTransformer(ZoomOutPageTransformer())
             //setPageTransformer(DepthPageTransformer())
 
             /*offscreenPageLimit = 3
@@ -80,16 +80,13 @@ class ViewPager2Activity : AppCompatActivity() {
                     super.onPageScrollStateChanged(state)
                     when (state) {
                         //뷰페이저에서 손 뗐을 때, 뷰페이저가 멈춰있을 때 자동 스크롤
-                        ViewPager2.SCROLL_STATE_IDLE ->{
-                            if (!job.isActive){
-                                scrollJobCreate()
-                            }
-                        }
+                        ViewPager2.SCROLL_STATE_IDLE -> if (!job.isActive) scrollJobCreate()
 
                         //뷰페이저가 움직이는 중일 때 자동 스크롤 정지
-                        ViewPager2.SCROLL_STATE_DRAGGING -> {
-                            job.cancel()
-                        }
+                        ViewPager2.SCROLL_STATE_DRAGGING -> job.cancel()
+
+                        //스크롤이 양쪽 끝가지 간 상태 // 무한스크롤 구현하였으면 안옴
+                        ViewPager2.SCROLL_STATE_SETTLING -> {}
                     }
                 }
             })
@@ -109,12 +106,12 @@ class ViewPager2Activity : AppCompatActivity() {
     fun scrollJobCreate() {
         job = lifecycleScope.launchWhenResumed {
             delay(1500)
-            binding.viewPager.setCurrentItemWithDuration(++bannerPosition, 1500)
+            binding.viewPager.setCurrentItemWithDuration(++bannerPosition, 1300)
         }
     }
 
     //Custom setCurrentItem() 애니메이션 시간 지정가능
-    fun ViewPager2.setCurrentItemWithDuration(
+    private fun ViewPager2.setCurrentItemWithDuration(
         item: Int, duration: Long,
         interpolator: TimeInterpolator = AccelerateDecelerateInterpolator(),
         pagePxWidth: Int = width // ViewPager2 View 의 getWidth()에서 가져온 기본값
