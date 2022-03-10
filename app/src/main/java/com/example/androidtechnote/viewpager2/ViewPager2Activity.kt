@@ -4,15 +4,15 @@ import android.animation.Animator
 import android.animation.TimeInterpolator
 import android.animation.ValueAnimator
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.os.Message
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.ActivityViewPager2Binding
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlin.math.ceil
 
 class DataPage(var color: Int, var title: String)
@@ -20,9 +20,8 @@ class DataPage(var color: Int, var title: String)
 class ViewPager2Activity : AppCompatActivity() {
     lateinit var binding: ActivityViewPager2Binding
 
-    private var myHandler = MyHandler()
+    lateinit var job : Job
     private var bannerPosition = 0
-    private val intervalTime = 2000.toLong() // 몇초 간격으로 페이지를 넘길것인지 (1500 = 1.5초)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +55,7 @@ class ViewPager2Activity : AppCompatActivity() {
             setCurrentItem(bannerPosition, false)
             orientation = ViewPager2.ORIENTATION_HORIZONTAL //스크롤 manipulate
 
-            setPageTransformer(ZoomOutPageTransformer())
+            //setPageTransformer(ZoomOutPageTransformer())
             //setPageTransformer(DepthPageTransformer())
 
             /*offscreenPageLimit = 3
@@ -81,10 +80,16 @@ class ViewPager2Activity : AppCompatActivity() {
                     super.onPageScrollStateChanged(state)
                     when (state) {
                         //뷰페이저에서 손 뗐을 때, 뷰페이저가 멈춰있을 때 자동 스크롤
-                        ViewPager2.SCROLL_STATE_IDLE -> autoScrollStart(intervalTime)
+                        ViewPager2.SCROLL_STATE_IDLE ->{
+                            if (!job.isActive){
+                                scrollJobCreate()
+                            }
+                        }
 
                         //뷰페이저가 움직이는 중일 때 자동 스크롤 정지
-                        ViewPager2.SCROLL_STATE_DRAGGING -> autoScrollStop()
+                        ViewPager2.SCROLL_STATE_DRAGGING -> {
+                            job.cancel()
+                        }
                     }
                 }
             })
@@ -93,32 +98,19 @@ class ViewPager2Activity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        autoScrollStart(intervalTime)
+        scrollJobCreate()
     }
 
     override fun onPause() {
         super.onPause()
-        autoScrollStop()
+        job.cancel()
     }
 
-    private inner class MyHandler : Handler(Looper.getMainLooper()) {
-        override fun handleMessage(msg: Message) {
-            super.handleMessage(msg)
-
-            if (msg.what == 0) {
-                binding.viewPager.setCurrentItemWithDuration(++bannerPosition, 1500) // 다음 페이지로 이동
-                autoScrollStart(intervalTime) // 스크롤을 계속 진행
-            }
+    fun scrollJobCreate() {
+        job = lifecycleScope.launchWhenResumed {
+            delay(1500)
+            binding.viewPager.setCurrentItemWithDuration(++bannerPosition, 1500)
         }
-    }
-
-    private fun autoScrollStart(intervalTime: Long) {
-        myHandler.removeMessages(0)                        // 기존 핸들러 메시지 삭제
-        myHandler.sendEmptyMessageDelayed(0, intervalTime) // intervalTime 만큼 반복해서 핸들러를 실행하게 함
-    }
-
-    private fun autoScrollStop() {
-        myHandler.removeMessages(0)    // 핸들러를 중지시킴
     }
 
     //Custom setCurrentItem() 애니메이션 시간 지정가능
