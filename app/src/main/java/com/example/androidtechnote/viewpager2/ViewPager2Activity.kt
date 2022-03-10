@@ -15,6 +15,8 @@ import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.ActivityViewPager2Binding
 import kotlin.math.ceil
 
+class DataPage(var color: Int, var title: String)
+
 class ViewPager2Activity : AppCompatActivity() {
     lateinit var binding: ActivityViewPager2Binding
 
@@ -43,6 +45,7 @@ class ViewPager2Activity : AppCompatActivity() {
         }
 
         viewPagerInit(binding.viewPager, list)
+        //binding.dotsIndicator.setViewPager2(binding.viewPager)
     }
 
     private fun viewPagerInit(viewPager: ViewPager2, list: ArrayList<DataPage>){
@@ -51,8 +54,8 @@ class ViewPager2Activity : AppCompatActivity() {
             setCurrentItem(bannerPosition, false)
             orientation = ViewPager2.ORIENTATION_HORIZONTAL //스크롤 manipulate
 
-            setPageTransformer(ZoomOutPageTransformer())
-            //setPageTransformer(DepthPageTransformer())
+            //setPageTransformer(ZoomOutPageTransformer())
+            setPageTransformer(DepthPageTransformer())
 
             /*offscreenPageLimit = 3
             setPageTransformer(SliderTransformer(3))
@@ -123,23 +126,26 @@ class ViewPager2Activity : AppCompatActivity() {
         val pxToDrag: Int = pagePxWidth * (item - currentItem)
         val animator = ValueAnimator.ofInt(0, pxToDrag)
         var previousValue = 0
+
         animator.addUpdateListener { valueAnimator ->
             val currentValue = valueAnimator.animatedValue as Int
             val currentPxToDrag = (currentValue - previousValue).toFloat()
             fakeDragBy(-currentPxToDrag)
             previousValue = currentValue
         }
+
         animator.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animation: Animator?) { beginFakeDrag() }
             override fun onAnimationEnd(animation: Animator?) { endFakeDrag() }
             override fun onAnimationCancel(animation: Animator?) { /* Ignored */ }
             override fun onAnimationRepeat(animation: Animator?) { /* Ignored */ }
         })
+
         animator.interpolator = interpolator
         animator.duration = duration
         animator.start()
     }
 }
 
-class DataPage(var color: Int, var title: String)
+
 
