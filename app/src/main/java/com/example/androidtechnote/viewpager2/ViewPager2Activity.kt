@@ -30,12 +30,12 @@ class ViewPager2Activity : AppCompatActivity() {
 
         val list: ArrayList<DataPage> = ArrayList<DataPage>().let {
             it.apply {
-                add(DataPage(android.R.color.black, "1 Page"))
-                add(DataPage(android.R.color.holo_red_light, "2 Page"))
+                add(DataPage(android.R.color.holo_red_light, "1 Page"))
+                add(DataPage(android.R.color.holo_orange_dark, "2 Page"))
                 add(DataPage(android.R.color.holo_green_dark, "3 Page"))
-                add(DataPage(android.R.color.holo_orange_dark, "4 Page"))
-                add(DataPage(android.R.color.holo_blue_light, "5 Page"))
-                add(DataPage(android.R.color.holo_blue_bright, "6 Page"))
+                add(DataPage(android.R.color.holo_blue_light, "4 Page"))
+                add(DataPage(android.R.color.holo_blue_bright, "5 Page"))
+                add(DataPage(android.R.color.black, "6 Page"))
             }
         }
 
@@ -46,6 +46,8 @@ class ViewPager2Activity : AppCompatActivity() {
 
         viewPagerInit(binding.viewPager, list)
         //binding.dotsIndicator.setViewPager2(binding.viewPager)
+
+        binding.txtCurrentBanner.text = getString(R.string.viewpager2_banner, 1, list.size)
     }
 
     private fun viewPagerInit(viewPager: ViewPager2, list: ArrayList<DataPage>){
@@ -54,8 +56,8 @@ class ViewPager2Activity : AppCompatActivity() {
             setCurrentItem(bannerPosition, false)
             orientation = ViewPager2.ORIENTATION_HORIZONTAL //스크롤 manipulate
 
-            //setPageTransformer(ZoomOutPageTransformer())
-            setPageTransformer(DepthPageTransformer())
+            setPageTransformer(ZoomOutPageTransformer())
+            //setPageTransformer(DepthPageTransformer())
 
             /*offscreenPageLimit = 3
             setPageTransformer(SliderTransformer(3))
@@ -71,6 +73,8 @@ class ViewPager2Activity : AppCompatActivity() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     bannerPosition = position
+
+                    binding.txtCurrentBanner.text = getString(R.string.viewpager2_banner, (bannerPosition % list.size)+1, list.size)
                 }
 
                 override fun onPageScrollStateChanged(state: Int) {
