@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.lifecycle.Observer
+import androidx.lifecycle.map
 import androidx.work.*
 import com.example.androidtechnote.R
 import java.util.concurrent.TimeUnit
@@ -39,7 +41,7 @@ class BasicWorkManagerActivity : AppCompatActivity() {
         val workManager = WorkManager.getInstance()    //WorkManager 객체
 
         startSimpleWorkerBtn.setOnClickListener {
-            val simpleRequest = OneTimeWorkRequest.Builder(SimpleWorker::class.java)
+            /*val simpleRequest = OneTimeWorkRequest.Builder(SimpleWorker::class.java)
                 .setInputData(inputData)
                 //.setConstraints(constraints)
                 .build()
@@ -67,6 +69,29 @@ class BasicWorkManagerActivity : AppCompatActivity() {
                     WorkInfo.State.FAILED -> { "세미나 work 진행상태: ${info.state}\n진행성공유무: $workFinished" }
                     else -> { "세미나 work 진행상태: ${info.state}\n진행성공유무: $workFinished" }
                     //State 태스크의 상태 RUNNING,SUCCEEDED,FAILED,ENQUEUED,BLOCKEDCANCELLED
+                }
+            })*/
+            val simpleRequest = OneTimeWorkRequest.Builder(SimpleWorker::class.java)
+                .addTag("test1")
+                //.setInputData(inputData)
+                .build()
+
+            workManager
+                .beginWith(simpleRequest)
+                .enqueue()
+
+            val workInfo = workManager.getWorkInfosByTagLiveData("test1").map { it[0] }
+            workInfo.observe(this, Observer {
+                val workFinished =it.state.isFinished
+
+                Log.d("워크테스트", "${it.state}")
+
+                simpleWorkStatusText.text = when(it.state){
+                    WorkInfo.State.SUCCEEDED,
+                    WorkInfo.State.FAILED -> { "세미나 work 진행상태: ${it.state}\n진행성공유무: $workFinished" }
+                    else -> {
+                        "세미나 work 진행상태: ${it.state}\n진행성공유무: $workFinished"
+                    }
                 }
             })
         }

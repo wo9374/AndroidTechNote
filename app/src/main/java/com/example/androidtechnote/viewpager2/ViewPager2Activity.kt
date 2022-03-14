@@ -139,6 +139,3 @@ class ViewPager2Activity : AppCompatActivity() {
         animator.start()
     }
 }
-
-
-
