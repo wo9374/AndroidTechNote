@@ -83,7 +83,7 @@ class AddActivity : AppCompatActivity() {
         // clipboard 내부의 값을 가져온다.
         val clipboardTest = clipboard.plainTextClip()
 
-        // 클립보드 내 값이 유효 && 운송장 번호로 사용할 숫자형태의 문자열인지 && 길이가 20자 이하인지
+        // 클립보드 내 값이 유효 && 길이가 20자 이하인지
         if (!clipboardTest.isNullOrBlank() && clipboardTest.length <= 20) { //&& clipboardTest.isDigitsOnly()
             AlertDialog.Builder(this)
                 .setTitle("클립 보드에 있는 $clipboardTest 를 붙여넣기")
@@ -107,10 +107,9 @@ class AddActivity : AppCompatActivity() {
             null
         }
 
-    //ClipboardManager.OnPrimaryClipChangedListener
-    //clipboard의 클립이 변경될 때 호출되는 리스너 콜백을 정의할 수 있다.
-    //clearPrimaryClip() - 현재 클립의 내용을 제거합니다.
-    //getPrimaryClip() - 현재 클립의 내용을 반환한다.
-    //hasPrimaryClip() - 클립이 있는지 없는지에 대한 Boolean을 반환한다.
-    //setPrimaryClip(ClipData clip) - clipdata를 설정한다.
+    //addPrimaryClipChangedListener() - ClipboardManager.OnPrimaryClipChangedListener clipboard의 클립이 변경될 때 호출되는 리스너 콜백을 정의할 수 있다.
+    //clearPrimaryClip() - 현재 클립의 내용을 제거
+    //getPrimaryClip() - 현재 클립의 내용을 반환
+    //hasPrimaryClip() - 클립이 있는지 없는지에 대한 Boolean을 반환
+    //setPrimaryClip(ClipData clip) - clipdata를 설정
 }
