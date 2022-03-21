@@ -60,7 +60,7 @@ class AddActivity : AppCompatActivity() {
         }
 
         binding.clipboardBtn.setOnClickListener {
-            copyClipBoard()
+            copyClipBoard()  //Fragment 에서는 따로 버튼안에 호출이 필요없이 onCreate에서도 동작할거같다.
 
             //복사
             /*val clipboard: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
