@@ -3,6 +3,7 @@ package com.example.androidtechnote.viewpager2
 import android.animation.Animator
 import android.animation.TimeInterpolator
 import android.animation.ValueAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.ActivityViewPager2Binding
+import com.example.androidtechnote.navigation.NavigationActivity
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlin.math.ceil
@@ -47,6 +49,11 @@ class ViewPager2Activity : AppCompatActivity() {
         //binding.dotsIndicator.setViewPager2(binding.viewPager)
 
         binding.txtCurrentBanner.text = getString(R.string.viewpager2_banner, 1, list.size)
+
+        binding.button3.setOnClickListener {
+            val intent = Intent(applicationContext, EmptyActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun viewPagerInit(viewPager: ViewPager2, list: ArrayList<DataPage>){
