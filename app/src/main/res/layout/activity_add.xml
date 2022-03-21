@@ -69,5 +69,13 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
+        <Button
+            android:id="@+id/clipboardBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="clipboard"
+            app:layout_constraintBottom_toTopOf="@+id/add_edittext_title"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
