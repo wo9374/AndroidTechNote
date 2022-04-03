@@ -14,6 +14,8 @@ Navigation
 
 RecyclerView
  Epoxy
+
+ ClipboardManager
  
  Paging3 - Local, ContentResolver, Retrofit
  
