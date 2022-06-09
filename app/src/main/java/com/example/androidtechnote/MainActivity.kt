@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import com.example.androidtechnote.camera.camerakit_library.CameraXActivity
+import com.example.androidtechnote.coordinator.bottomsheet.BottomSheetActivity
 import com.example.androidtechnote.coordinator.CoordinatorActivity
 import com.example.androidtechnote.databinding.ActivityMainBinding
 import com.example.androidtechnote.ktor.KtorActivity
@@ -53,6 +53,7 @@ class MainActivity : AppCompatActivity() {
                 binding.epoxyBtn.id -> intent = Intent(applicationContext, EpoxyActivity::class.java )
                 binding.ktorBtn.id -> intent = Intent(applicationContext, KtorActivity::class.java )
                 binding.viewpagerBtn.id -> intent = Intent(applicationContext, ViewPager2Activity::class.java )
+                binding.bottomSheetBtn.id -> intent = Intent(applicationContext, BottomSheetActivity::class.java)
             }
             startActivity(intent)
         }

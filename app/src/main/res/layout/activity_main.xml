@@ -96,6 +96,15 @@
             app:layout_constraintStart_toEndOf="@id/ktor_btn"
             app:layout_constraintTop_toBottomOf="@id/paging_btn" />
 
+        <Button
+            android:id="@+id/bottom_sheet_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{callBack::onClick}"
+            android:text="BottomSheet"
+            app:layout_constraintStart_toEndOf="@id/viewpager_btn"
+            app:layout_constraintTop_toBottomOf="@id/paging_btn" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
