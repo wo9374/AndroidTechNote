@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.ActivityBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class BottomSheetActivity : AppCompatActivity() {
     lateinit var bottomBehavior : BottomSheetBehavior<View>
@@ -28,6 +29,9 @@ class BottomSheetActivity : AppCompatActivity() {
         binding.bottomInclude.apply {
             bottomBehavior = BottomSheetBehavior.from(root)
             bottomBehavior.apply {
+                isHideable = false
+                peekHeight = 32.dp
+
                 //setBottomSheetCallback  <- Deprecated
                 addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
                     override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -89,6 +93,21 @@ class BottomSheetActivity : AppCompatActivity() {
                 } else
                     BottomSheetBehavior.STATE_COLLAPSED
 
+            }
+        }
+
+
+        binding.apply {
+            modalDialog.setOnClickListener {
+                val dialogView = layoutInflater.inflate(R.layout.layout_bottom_sheet_fragment, null)
+                BottomSheetDialog(this@BottomSheetActivity).apply {
+                    setContentView(dialogView)
+                    show()
+                }
+            }
+            modalFragment.setOnClickListener {
+                val modalBottomSheet = BottomSheetFragment()
+                modalBottomSheet.show(supportFragmentManager, modalBottomSheet.tag)
             }
         }
     }

@@ -22,6 +22,24 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <Button
+                android:id="@+id/modal_dialog"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Modal\nDialog"
+                app:layout_constraintEnd_toStartOf="@id/modal_fragment"
+                app:layout_constraintStart_toStartOf="@+id/hello_text"
+                app:layout_constraintTop_toBottomOf="@+id/hello_text" />
+
+            <Button
+                android:id="@+id/modal_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Modal\nFragment"
+                app:layout_constraintEnd_toEndOf="@+id/hello_text"
+                app:layout_constraintStart_toEndOf="@id/modal_dialog"
+                app:layout_constraintTop_toBottomOf="@+id/hello_text" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
