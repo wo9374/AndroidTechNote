@@ -21,6 +21,9 @@
         android:theme="@style/Theme.AndroidTechNote"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".EventObserverActivity"
+            android:exported="false" />
+        <activity
             android:name=".coordinator.bottomsheet.BottomSheetActivity"
             android:exported="false" />
         <activity
