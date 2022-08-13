@@ -1,10 +1,8 @@
-package com.example.androidtechnote
+package com.example.androidtechnote.eventobserver
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
 
 class EventObserverViewModel : ViewModel() {
     private val _callEvent = MutableLiveData<EventWrapper<String>>()

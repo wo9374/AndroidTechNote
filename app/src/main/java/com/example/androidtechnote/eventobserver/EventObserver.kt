@@ -1,4 +1,4 @@
-package com.example.androidtechnote
+package com.example.androidtechnote.eventobserver
 
 import androidx.lifecycle.Observer
 
