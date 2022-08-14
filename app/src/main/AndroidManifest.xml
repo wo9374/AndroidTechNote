@@ -11,6 +11,7 @@
     <uses-feature android:name="android.hardware.camera.any" />
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -20,8 +21,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidTechNote"
         android:usesCleartextTraffic="true">
+
         <activity
-            android:name=".EventObserverActivity"
+            android:name=".telephonymanager.TelephonyManagerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".eventobserver.EventObserverActivity"
             android:exported="false" />
         <activity
             android:name=".coordinator.bottomsheet.BottomSheetActivity"
