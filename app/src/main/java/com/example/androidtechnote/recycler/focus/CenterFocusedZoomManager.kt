@@ -1,4 +1,4 @@
-package com.example.androidtechnote.recycler
+package com.example.androidtechnote.recycler.focus
 
 import android.content.Context
 import android.util.Log
