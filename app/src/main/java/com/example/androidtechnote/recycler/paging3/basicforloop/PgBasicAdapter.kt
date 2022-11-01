@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidtechnote.databinding.ItemSampleBinding
 
 
-class PagingAdapter : PagingDataAdapter<String, PagingViewHolder>(diffCallback) {
+class PgBasicAdapter : PagingDataAdapter<String, PagingViewHolder>(diffCallback) {
 
     lateinit var mClickListener: ItemClickListener
 
@@ -54,7 +54,7 @@ class PagingAdapter : PagingDataAdapter<String, PagingViewHolder>(diffCallback) 
     }
 }
 
-class PagingViewHolder(private val binding: ItemSampleBinding, private val listener: PagingAdapter.ItemClickListener) : RecyclerView.ViewHolder(binding.root) {
+class PagingViewHolder(private val binding: ItemSampleBinding, private val listener: PgBasicAdapter.ItemClickListener) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(value: String) {
         val pos = bindingAdapterPosition

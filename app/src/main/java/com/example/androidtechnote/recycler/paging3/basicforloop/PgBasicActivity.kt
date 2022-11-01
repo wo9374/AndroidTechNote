@@ -10,14 +10,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.ActivityBasicPagingBinding
-import com.example.androidtechnote.recycler.SpaceItemSpaceDeco
+import com.example.androidtechnote.recycler.focus.SpaceItemSpaceDeco
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 
 class PgBasicActivity : AppCompatActivity() {
     private lateinit var viewModelPg : PgBasicViewModel
-    private lateinit var pagingAdapter: PagingAdapter
+    private lateinit var pagingAdapter: PgBasicAdapter
 
     private lateinit var binding: ActivityBasicPagingBinding
 
@@ -31,8 +31,8 @@ class PgBasicActivity : AppCompatActivity() {
         //val orientation = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) LinearLayoutManager.HORIZONTAL else LinearLayoutManager.VERTICAL
         //centerZoomManager = CenterFocusedZoomManager(this, orientation)
 
-        pagingAdapter = PagingAdapter()
-        pagingAdapter.setOnItemClick(object : PagingAdapter.ItemClickListener{
+        pagingAdapter = PgBasicAdapter()
+        pagingAdapter.setOnItemClick(object : PgBasicAdapter.ItemClickListener{
             override fun onClick(v: View, position: Int) {
                 //centerZoomManager.scrollToPositionWithOffset(position, if (orientation == LinearLayoutManager.HORIZONTAL) v.width/2 else v.height/2)
             }
