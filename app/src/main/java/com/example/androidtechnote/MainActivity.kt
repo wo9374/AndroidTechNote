@@ -1,13 +1,8 @@
 package com.example.androidtechnote
 
-import android.app.Service
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
-import android.telephony.TelephonyManager
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +15,6 @@ import com.example.androidtechnote.ktor.KtorActivity
 import com.example.androidtechnote.myworkmanager.WorkManagerActivity
 import com.example.androidtechnote.navigation.NavigationActivity
 import com.example.androidtechnote.recycler.epoxy.EpoxyActivity
-import com.example.androidtechnote.recycler.focus.FocusableRecyclerActivity
 import com.example.androidtechnote.recycler.paging3.PagingActivity
 import com.example.androidtechnote.room.view.RoomDbActivity
 import com.example.androidtechnote.telephonymanager.TelephonyManagerActivity
@@ -63,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                     viewpagerBtn.id -> intent = Intent(applicationContext, ViewPager2Activity::class.java )
                     bottomSheetBtn.id -> intent = Intent(applicationContext, BottomSheetActivity::class.java)
                     telephonyBtn.id -> intent = Intent(applicationContext, TelephonyManagerActivity::class.java)
-                    focusBtn.id -> intent = Intent(applicationContext, FocusableRecyclerActivity::class.java)
+                    focusBtn.id -> intent = Intent(applicationContext, TvRecyclerActivity::class.java)
                 }
             }
             startActivity(intent)

@@ -21,6 +21,8 @@ class PgBasicActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBasicPagingBinding
 
+    private lateinit var centerZoomManager: LinearLayoutManager //LayoutManager 사용 중앙 포커싱 아이템 확대
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -29,13 +31,22 @@ class PgBasicActivity : AppCompatActivity() {
         pagingAdapter = PgBasicAdapter()
         pagingAdapter.setOnItemClick(object : PgBasicAdapter.ItemClickListener{
             override fun onClick(v: View, position: Int) {
-
+                //centerZoomManager.scrollToPositionWithOffset(position, if (orientation == LinearLayoutManager.HORIZONTAL) v.width/2 else v.height/2)
             }
         })
 
+        //val orientation = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) LinearLayoutManager.HORIZONTAL else LinearLayoutManager.VERTICAL
+        //centerZoomManager = CenterFocusedZoomManager(this, orientation)
+
         binding.recyclerView.apply {
             adapter = pagingAdapter
-            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+            //layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+
+            layoutManager = GridLayoutManager(applicationContext, 4) // centerZoomManager
+
+            val metrics = context.resources.displayMetrics
+            val dp5 = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5F, metrics).toInt()
+            addItemDecoration(SpaceItemSpaceDeco(dp5, true))
         }
 
         val service = PgForLoopService()
