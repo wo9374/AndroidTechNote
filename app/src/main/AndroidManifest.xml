@@ -22,8 +22,15 @@
         android:theme="@style/Theme.AndroidTechNote"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".recycler.focus.TvRecyclerActivity"
-            android:exported="false"/>
+            android:name=".customview.DetailMovieActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".customview.CustomViewActivity"
+            android:exported="false"></activity>
         <activity
             android:name=".telephonymanager.TelephonyManagerActivity"
             android:exported="false" />
