@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.ActivityBasicPagingBinding
-import com.example.androidtechnote.recycler.focus.SpaceItemSpaceDeco
+import com.example.androidtechnote.recycler.paging3.SpaceItemSpaceDeco
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

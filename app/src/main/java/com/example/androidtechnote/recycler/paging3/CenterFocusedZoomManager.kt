@@ -1,4 +1,4 @@
-package com.example.androidtechnote.recycler.focus
+package com.example.androidtechnote.recycler.paging3
 
 import android.content.Context
 import android.util.Log
