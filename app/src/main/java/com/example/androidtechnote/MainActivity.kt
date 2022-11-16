@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil
 import com.example.androidtechnote.camera.camerakit_library.CameraXActivity
 import com.example.androidtechnote.coordinator.bottomsheet.BottomSheetActivity
 import com.example.androidtechnote.coordinator.CoordinatorActivity
-import com.example.androidtechnote.customview.CustomViewActivity
 import com.example.androidtechnote.databinding.ActivityMainBinding
 import com.example.androidtechnote.ktor.KtorActivity
 import com.example.androidtechnote.myworkmanager.WorkManagerActivity
@@ -58,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                     viewpagerBtn.id -> intent = Intent(applicationContext, ViewPager2Activity::class.java )
                     bottomSheetBtn.id -> intent = Intent(applicationContext, BottomSheetActivity::class.java)
                     telephonyBtn.id -> intent = Intent(applicationContext, TelephonyManagerActivity::class.java)
-                    focusBtn.id -> intent = Intent(applicationContext, CustomViewActivity::class.java)
+                    focusBtn.id -> {}
                 }
             }
             startActivity(intent)
