@@ -2,6 +2,7 @@ package com.example.androidtechnote.coordinator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -25,6 +26,11 @@ class CoordinatorActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         pagingAdapter = PgBasicAdapter()
+        pagingAdapter.setOnItemClick(object : PgBasicAdapter.ItemClickListener{
+            override fun onClick(v: View, position: Int) {
+
+            }
+        })
         binding.recyclerView.adapter = pagingAdapter
         binding.recyclerView.layoutManager = GridLayoutManager(this , 4)
 
