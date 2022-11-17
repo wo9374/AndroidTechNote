@@ -8,20 +8,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.focusablelistview.databinding.ItemFocusableBinding
 
-open class FocusableListAdapter<T>(
-    diffCallback: DiffUtil.ItemCallback<T>,
-    itemHighLight: Boolean = false,
-    cornerRadius: Float = 0F
-) : ListAdapter<T, FocusableViewHolder>(diffCallback) {
+abstract class FocusableListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) : ListAdapter<T, FocusableViewHolder>(diffCallback) {
 
-    var prevPosition = 0
-    var itemHighLight = false
-    var cornerRadius = 0F
+    abstract var highLight : Boolean
+    abstract var radius : Float
+    abstract var listener: FocusableClickListener
 
-    init {
-        this.itemHighLight = itemHighLight
-        this.cornerRadius = cornerRadius
-    }
+    private var prevPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FocusableViewHolder {
         val binding = ItemFocusableBinding.inflate(LayoutInflater.from(parent.context),parent, false)
@@ -30,8 +23,8 @@ open class FocusableListAdapter<T>(
             isFocusableInTouchMode = true
         }
         binding.apply {
-            thumbnailImg.cornerRadius = cornerRadius
-            bgHighlight.cornerRadius = cornerRadius
+            thumbnailImg.cornerRadius = radius
+            bgHighlight.cornerRadius = radius
         }
         return FocusableViewHolder(binding)
     }
@@ -40,7 +33,7 @@ open class FocusableListAdapter<T>(
         holder.apply {
             if (adapterPosition != RecyclerView.NO_POSITION){
 
-                setBgHighLight(itemHighLight)
+                setBgHighLight(highLight)
 
                 binding.root.onFocusChangeListener = View.OnFocusChangeListener { itemView, hasFocus ->
                     if (hasFocus){
@@ -51,10 +44,10 @@ open class FocusableListAdapter<T>(
                         else
                             expansionAnim()
 
-                        if (itemHighLight) appearHighLight()
+                        if (highLight) appearHighLight()
                     }else{
                         reduceAnim()
-                        if (itemHighLight) disappearHighLight()
+                        if (highLight) disappearHighLight()
                     }
 
                     prevPosition = adapterPosition
@@ -62,9 +55,14 @@ open class FocusableListAdapter<T>(
             }
         }
     }
+
+
+    interface FocusableClickListener {
+        fun onItemClickListener(view: View, pos: Int)
+    }
 }
 
-open class FocusableAdapter : RecyclerView.Adapter<FocusableViewHolder>() {
+abstract class FocusableAdapter : RecyclerView.Adapter<FocusableViewHolder>() {
     var prevPosition = 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FocusableViewHolder {
