@@ -1,2 +1,3 @@
 include ':app'
+include ':focusablelistview'
 rootProject.name = "AndroidTechNote"

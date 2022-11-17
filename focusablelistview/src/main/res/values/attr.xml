@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundedImageView">
+
+        <attr name="cornerRadius" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="FocusableListView">
+        <attr name="orientation" format="enum">
+            <enum name="horizontal" value="0"/>
+            <enum name="vertical" value="1"/>
+        </attr>
+
+
+        <attr name="itemImageCornerRadius" format="dimension"/>
+        <attr name="itemDecoration" format="dimension"/>
+        <attr name="itemHighLight" format="boolean"/>
+
+        <attr name="centerScrollPosition" format="boolean"/>
+    </declare-styleable>
+</resources>
