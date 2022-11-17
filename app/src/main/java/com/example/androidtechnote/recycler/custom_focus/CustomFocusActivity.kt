@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.ActivityCustomFocusBinding
 import com.example.customlibrary.MoviesRepository
+import com.example.focusablelistview.FocusableListAdapter
 import kotlinx.coroutines.flow.collectLatest
 
 class CustomFocusActivity : AppCompatActivity() {
@@ -31,7 +32,12 @@ class CustomFocusActivity : AppCompatActivity() {
                         is UiState.Init -> {
                             listAdapter = CustomFocusListAdapter(
                                 binding.focusLayout.itemHighLight,
-                                binding.focusLayout.itemCornerDp
+                                binding.focusLayout.itemCornerDp,
+                                object : FocusableListAdapter.FocusableClickListener{
+                                    override fun onItemClickListener(view: View, pos: Int) {
+                                        
+                                    }
+                                }
                             )
                         }
                         is UiState.Success -> {

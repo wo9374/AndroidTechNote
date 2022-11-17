@@ -5,7 +5,12 @@ import com.example.customlibrary.MoviesRepository
 import com.example.focusablelistview.FocusableListAdapter
 import com.example.focusablelistview.FocusableViewHolder
 
-class CustomFocusListAdapter(itemHighLight: Boolean, cornerRadius : Float)  : FocusableListAdapter<FocusItem>(DiffUtil(), itemHighLight, cornerRadius) {
+class CustomFocusListAdapter(
+    override var highLight: Boolean,
+    override var radius: Float,
+    override var listener: FocusableClickListener
+) : FocusableListAdapter<FocusItem>(DiffUtil()) {
+
     override fun onBindViewHolder(holder: FocusableViewHolder, position: Int) {
         holder.setTitle(getItem(position).title)
         holder.setGlide(MoviesRepository.TMDB_POPULAR_MOVIE_IMG_W500 + getItem(position).poster_path)
