@@ -1,5 +1,6 @@
 package com.example.focusablelistview
 
+import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.ViewPropertyAnimatorCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +27,7 @@ class FocusableViewHolder(val binding: ItemFocusableBinding) : RecyclerView.View
             .animate(binding.root)
             .scaleX(1.14f)
             .scaleY(1.14f)
-            .setDuration(150)
+            .setDuration(130)
             .translationZ(1f)
     }
 
@@ -56,6 +57,21 @@ class FocusableViewHolder(val binding: ItemFocusableBinding) : RecyclerView.View
         }.start()
 
         binding.title.animate().alpha(1.0f)
+    }
+
+    fun setBgHighLight(boolean: Boolean){
+        if (boolean)
+            binding.bgHighlight.visibility = View.VISIBLE
+        else
+            binding.bgHighlight.visibility = View.INVISIBLE
+    }
+
+    fun appearHighLight(){
+        binding.bgHighlight.animate().alpha(1.0f)
+    }
+
+    fun disappearHighLight(){
+        binding.bgHighlight.animate().alpha(0.0f).duration = 300
     }
 
     fun reduceAnim(){

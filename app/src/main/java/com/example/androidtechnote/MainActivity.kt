@@ -14,6 +14,7 @@ import com.example.androidtechnote.databinding.ActivityMainBinding
 import com.example.androidtechnote.ktor.KtorActivity
 import com.example.androidtechnote.myworkmanager.WorkManagerActivity
 import com.example.androidtechnote.navigation.NavigationActivity
+import com.example.androidtechnote.recycler.custom_focus.CustomFocusActivity
 import com.example.androidtechnote.recycler.epoxy.EpoxyActivity
 import com.example.androidtechnote.recycler.paging3.PagingActivity
 import com.example.androidtechnote.room.view.RoomDbActivity
@@ -57,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                     viewpagerBtn.id -> intent = Intent(applicationContext, ViewPager2Activity::class.java )
                     bottomSheetBtn.id -> intent = Intent(applicationContext, BottomSheetActivity::class.java)
                     telephonyBtn.id -> intent = Intent(applicationContext, TelephonyManagerActivity::class.java)
-                    focusBtn.id -> {}
+                    focusBtn.id -> {intent = Intent(applicationContext, CustomFocusActivity::class.java)}
                 }
             }
             startActivity(intent)

@@ -22,7 +22,7 @@
         android:theme="@style/Theme.AndroidTechNote"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".CustomFocusActivity"
+            android:name=".recycler.custom_focus.CustomFocusActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -51,9 +51,7 @@
             android:exported="false" />
         <activity android:name=".room.view.RoomDbActivity" />
         <activity android:name=".room.view.AddActivity" />
-        <activity
-            android:name=".coordinator.CoordinatorActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity android:name=".coordinator.CoordinatorActivity"/>
         <activity
             android:name=".camera.camerakit_library.CameraXActivity"
             android:theme="@style/CameraTheme" />

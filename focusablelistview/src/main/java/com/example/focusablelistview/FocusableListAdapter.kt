@@ -39,6 +39,9 @@ open class FocusableListAdapter<T>(
     override fun onBindViewHolder(holder: FocusableViewHolder, position: Int) {
         holder.apply {
             if (adapterPosition != RecyclerView.NO_POSITION){
+
+                setBgHighLight(itemHighLight)
+
                 binding.root.onFocusChangeListener = View.OnFocusChangeListener { itemView, hasFocus ->
                     if (hasFocus){
                         if (prevPosition < adapterPosition)
@@ -48,12 +51,10 @@ open class FocusableListAdapter<T>(
                         else
                             expansionAnim()
 
-                        if (itemHighLight)
-                            binding.bgHighlight.visibility = View.VISIBLE
+                        if (itemHighLight) appearHighLight()
                     }else{
                         reduceAnim()
-                        if (itemHighLight)
-                            binding.bgHighlight.visibility = View.INVISIBLE
+                        if (itemHighLight) disappearHighLight()
                     }
 
                     prevPosition = adapterPosition

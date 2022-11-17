@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="callBack"
+            type="com.example.androidtechnote.recycler.custom_focus.CustomFocusActivity.CallBack" />
+    </data>
+
+    <com.example.focusablelistview.FocusableListView
+        android:id="@+id/focusLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:centerScrollPosition="true"
+        app:itemDecoration="16dp"
+        app:itemHighLight="true"
+        app:itemImageCornerRadius="10dp"
+        app:orientation="horizontal"
+        tools:context=".recycler.custom_focus.CustomFocusActivity">
+
+        <Button
+            android:id="@+id/btn_left"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{callBack::onClick}"
+            android:text="←"
+            app:layout_constraintBottom_toTopOf="@id/btn_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <Button
+            android:id="@+id/btn_right"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{callBack::onClick}"
+            android:text="→"
+            app:layout_constraintBottom_toTopOf="@id/btn_ok"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_left" />
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{callBack::onClick}"
+            android:text="ok"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_right" />
+    </com.example.focusablelistview.FocusableListView>
+</layout>
