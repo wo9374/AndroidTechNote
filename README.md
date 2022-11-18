@@ -1,10 +1,14 @@
 # AndroidTechNote
 
+BottomSheet(Persistent, Modal)
+
 Camera
 
-CoordinatorLatout
+CoordinatorLayout
 
 Databinding
+
+FocusableListView (Custom Library)
 
 Kotlin Ktor
 
@@ -12,16 +16,12 @@ MVVM
 
 Navigation
 
-RecyclerView
- Epoxy
-
- ClipboardManager
+RecyclerView - Epoxy, ClipboardManager, Paging3 (Local, ContentResolver, Retrofit)
  
- Paging3 - Local, ContentResolver, Retrofit
- 
-
 Room
 
-WorkManager
+Telephony
 
 ViewPager2
+
+WorkManager
