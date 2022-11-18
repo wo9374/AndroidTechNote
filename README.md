@@ -1,10 +1,14 @@
 # AndroidTechNote
 
+BottomSheet(Persistent, Modal)
+
 Camera
 
-CoordinatorLatout
+CoordinatorLayout
 
 Databinding
+
+FocusableListView (Custom Library)
 
 Kotlin Ktor
 
@@ -22,6 +26,8 @@ RecyclerView
 
 Room
 
-WorkManager
+Telephony
 
 ViewPager2
+
+WorkManager
