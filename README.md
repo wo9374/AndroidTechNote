@@ -16,14 +16,8 @@ MVVM
 
 Navigation
 
-RecyclerView
- Epoxy
-
- ClipboardManager
+RecyclerView - Epoxy, ClipboardManager, Paging3 (Local, ContentResolver, Retrofit)
  
- Paging3 - Local, ContentResolver, Retrofit
- 
-
 Room
 
 Telephony
