@@ -12,7 +12,7 @@ abstract class FocusableListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) :
 
     abstract var highLight : Boolean
     abstract var radius : Float
-    abstract var listener: FocusableClickListener
+    abstract var itemClick: (T, View) -> Unit
 
     private var prevPosition = 0
 
@@ -52,13 +52,12 @@ abstract class FocusableListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) :
 
                     prevPosition = adapterPosition
                 }
+
+                binding.root.setOnClickListener {
+                    itemClick(getItem(adapterPosition), it)
+                }
             }
         }
-    }
-
-
-    interface FocusableClickListener {
-        fun onItemClickListener(view: View, pos: Int)
     }
 }
 

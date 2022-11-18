@@ -1,5 +1,6 @@
 package com.example.androidtechnote.recycler.custom_focus
 
+import android.view.View
 import com.example.customlibrary.FocusItem
 import com.example.customlibrary.MoviesRepository
 import com.example.focusablelistview.FocusableListAdapter
@@ -8,7 +9,7 @@ import com.example.focusablelistview.FocusableViewHolder
 class CustomFocusListAdapter(
     override var highLight: Boolean,
     override var radius: Float,
-    override var listener: FocusableClickListener
+    override var itemClick: (FocusItem, View) -> Unit
 ) : FocusableListAdapter<FocusItem>(DiffUtil()) {
 
     override fun onBindViewHolder(holder: FocusableViewHolder, position: Int) {
