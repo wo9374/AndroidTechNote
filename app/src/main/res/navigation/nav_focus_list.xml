@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_focus_list"
+    app:startDestination="@id/focusListFragment">
+
+    <fragment
+        android:id="@+id/focusListFragment"
+        android:name="com.example.androidtechnote.recycler.custom_focus.FocusListFragment" />
+</navigation>

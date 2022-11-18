@@ -1,89 +1,36 @@
 package com.example.androidtechnote.recycler.custom_focus
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.RecyclerView
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.ActivityCustomFocusBinding
+import com.example.customlibrary.FocusItem
 import com.example.customlibrary.MoviesRepository
-import com.example.focusablelistview.FocusableListAdapter
 import kotlinx.coroutines.flow.collectLatest
+
 
 class CustomFocusActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityCustomFocusBinding
-    private val viewModel : CustomFocusViewModel by viewModels()
+    lateinit var navHostFragment : NavHostFragment
 
-    lateinit var listAdapter: CustomFocusListAdapter
+    private val viewModel : CustomFocusViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_custom_focus)
-        binding.callBack = callBack
 
-        binding.apply {
-            lifecycleScope.launchWhenStarted {
-                viewModel.uiState.collectLatest {
-                    when (it) {
-                        is UiState.Init -> {
-                            listAdapter = CustomFocusListAdapter(
-                                binding.focusLayout.itemHighLight,
-                                binding.focusLayout.itemCornerDp,
-                                object : FocusableListAdapter.FocusableClickListener{
-                                    override fun onItemClickListener(view: View, pos: Int) {
-                                        
-                                    }
-                                }
-                            )
-                        }
-                        is UiState.Success -> {
-                            focusLayout.recyclerView.adapter = listAdapter
-
-                            listAdapter.submitList(it.data) {
-                                focusLayout.recyclerView.post {
-                                    focusLayout.itemFocus()
-                                    focusLayout.setBgGlide(getBgUrl())
-                                }
-                            }
-                        }
-                        is UiState.Error -> {
-                            Toast.makeText(applicationContext, "${it.message}", Toast.LENGTH_LONG).show()
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    fun getBgUrl(): String = MoviesRepository.TMDB_POPULAR_MOVIE_IMG_ORIGINAL + listAdapter.currentList[binding.focusLayout.focusPosition].backdrop_path
-
-    interface CallBack {
-        fun onClick(view: View)
-    }
-
-    private val callBack = object : CallBack {
-        override fun onClick(view: View) {
-            binding.apply {
-                when (view.id) {
-                    btnLeft.id -> {
-                        binding.focusLayout.apply {
-                            if(prevItemFocus()) setBgGlide(getBgUrl())
-                        }
-                    }
-                    btnRight.id -> {
-                        binding.focusLayout.apply {
-                            if (nextItemFocus()) setBgGlide(getBgUrl())
-                        }
-                    }
-                    btnOk.id -> {
-                        binding.focusLayout.selectItem()
-                    }
-                }
-            }
-        }
+        navHostFragment = supportFragmentManager.findFragmentById(binding.navHost.id) as NavHostFragment
     }
 }

@@ -61,6 +61,7 @@ abstract class FocusableListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) :
     }
 }
 
+/*
 abstract class FocusableAdapter : RecyclerView.Adapter<FocusableViewHolder>() {
     var prevPosition = 0
 
@@ -97,4 +98,4 @@ abstract class FocusableAdapter : RecyclerView.Adapter<FocusableViewHolder>() {
     override fun getItemCount(): Int {
         return 0
     }
-}
+}*/
