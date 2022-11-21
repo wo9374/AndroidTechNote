@@ -3,16 +3,16 @@ package com.example.androidtechnote.recycler.custom_focus
 import android.view.View
 import com.example.customlibrary.FocusItem
 import com.example.customlibrary.MoviesRepository
-import com.example.focusablelistview.FocusableListAdapter
-import com.example.focusablelistview.FocusableViewHolder
+import com.example.focusablelistview.ListViewAdapter
+import com.example.focusablelistview.ListViewHolder
 
 class CustomFocusListAdapter(
     override var highLight: Boolean,
     override var radius: Float,
     override var itemClick: (FocusItem, View) -> Unit
-) : FocusableListAdapter<FocusItem>(DiffUtil()) {
+) : ListViewAdapter<FocusItem>(DiffUtil()) {
 
-    override fun onBindViewHolder(holder: FocusableViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.setTitle(getItem(position).title)
         holder.setGlide(MoviesRepository.TMDB_POPULAR_MOVIE_IMG_W500 + getItem(position).poster_path)
         super.onBindViewHolder(holder, position)
