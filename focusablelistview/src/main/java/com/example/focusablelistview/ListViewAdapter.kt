@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.focusablelistview.databinding.ItemFocusableBinding
 
-abstract class FocusableListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) : ListAdapter<T, FocusableViewHolder>(diffCallback) {
+abstract class ListViewAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) : ListAdapter<T, ListViewHolder>(diffCallback) {
 
     abstract var highLight : Boolean
     abstract var radius : Float
@@ -16,7 +16,7 @@ abstract class FocusableListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) :
 
     private var prevPosition = 0
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FocusableViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val binding = ItemFocusableBinding.inflate(LayoutInflater.from(parent.context),parent, false)
         binding.root.apply {
             isFocusable = true
@@ -26,10 +26,10 @@ abstract class FocusableListAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) :
             thumbnailImg.cornerRadius = radius
             bgHighlight.cornerRadius = radius
         }
-        return FocusableViewHolder(binding)
+        return ListViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: FocusableViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.apply {
             if (adapterPosition != RecyclerView.NO_POSITION){
 

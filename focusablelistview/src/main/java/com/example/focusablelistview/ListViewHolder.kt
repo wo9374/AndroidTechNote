@@ -1,19 +1,36 @@
 package com.example.focusablelistview
 
+import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.core.view.ViewPropertyAnimatorCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.focusablelistview.databinding.ItemFocusableBinding
 
-class FocusableViewHolder(val binding: ItemFocusableBinding) : RecyclerView.ViewHolder(binding.root){
+class ListViewHolder(val binding: ItemFocusableBinding) : RecyclerView.ViewHolder(binding.root){
 
-    fun setGlide(glideUrl: String){
+    fun setGlide(glideUrl: String, onImageReadyListener: OnImageReadyListener){
         Glide
             .with(binding.thumbnailImg)
             .load(glideUrl)
             .thumbnail(0.1f)
+            .listener(object : RequestListener<Drawable>{
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                    onImageReadyListener.onImageReady(adapterPosition)
+                    return false
+                }
+
+                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    onImageReadyListener.onImageReady(adapterPosition)
+                    return false
+                }
+
+            })
             .error(R.drawable.ic_launcher_foreground)
             .into(binding.thumbnailImg)
     }
