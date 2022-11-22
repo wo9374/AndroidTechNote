@@ -9,7 +9,7 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.FragmentFocusListBinding
 import com.example.androidtechnote.recycler.base.BaseFragment
-import com.example.customlibrary.MoviesRepository
+import com.example.androidtechnote.recycler.custom_focus.data.MoviesRepository
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

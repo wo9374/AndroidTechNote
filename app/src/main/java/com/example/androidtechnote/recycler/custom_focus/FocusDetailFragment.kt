@@ -1,9 +1,7 @@
 package com.example.androidtechnote.recycler.custom_focus
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.core.app.SharedElementCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
@@ -17,7 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.FragmentFocusDetailBinding
 import com.example.androidtechnote.recycler.base.BaseFragment
-import com.example.customlibrary.MoviesRepository
+import com.example.androidtechnote.recycler.custom_focus.data.MoviesRepository
 import kotlinx.coroutines.flow.collectLatest
 
 

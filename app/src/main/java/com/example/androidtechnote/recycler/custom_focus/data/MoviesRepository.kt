@@ -1,4 +1,4 @@
-package com.example.customlibrary
+package com.example.androidtechnote.recycler.custom_focus.data
 
 import retrofit2.HttpException
 import retrofit2.Retrofit
@@ -33,7 +33,7 @@ class MoviesRepository {
                 NetworkState.Error(response.code(), response.message())
             }
         }catch (e: HttpException){
-            NetworkState.Error(e.code(),e.message ?: "")
+            NetworkState.Error(e.code(), e.message ?: "")
         }catch (throwable: Throwable){
             NetworkState.Exception(throwable)
         }

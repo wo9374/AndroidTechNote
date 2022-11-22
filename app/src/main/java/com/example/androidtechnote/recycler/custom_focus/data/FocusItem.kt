@@ -1,4 +1,4 @@
-package com.example.customlibrary
+package com.example.androidtechnote.recycler.custom_focus.data
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,7 +1,7 @@
 package com.example.androidtechnote.recycler.custom_focus
 
-import com.example.customlibrary.FocusItem
-import com.example.customlibrary.MoviesRepository
+import com.example.androidtechnote.recycler.custom_focus.data.FocusItem
+import com.example.androidtechnote.recycler.custom_focus.data.MoviesRepository
 import com.example.focusablelistview.DetailAdapter
 import com.example.focusablelistview.DetailViewHolder
 
