@@ -2,19 +2,16 @@ package com.example.androidtechnote.recycler.custom_focus
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.FragmentNavigatorExtras
-import androidx.recyclerview.widget.RecyclerView
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.FragmentFocusListBinding
 import com.example.androidtechnote.recycler.base.BaseFragment
-import com.example.customlibrary.FocusItem
 import com.example.customlibrary.MoviesRepository
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class FocusListFragment : BaseFragment<FragmentFocusListBinding>(R.layout.fragment_focus_list){
     lateinit var viewModel: CustomFocusViewModel
@@ -31,8 +28,9 @@ class FocusListFragment : BaseFragment<FragmentFocusListBinding>(R.layout.fragme
 
         binding.focusLayout.apply {
             lifecycleScope.launchWhenStarted {
-                viewModel.uiState.collectLatest {
-                    when (it) {
+
+                viewModel.uiState.collectLatest { uiState ->
+                    when (uiState) {
                         is UiState.Init -> {
                             listAdapter = CustomFocusListAdapter(itemHighLight, itemCornerDp){ clickItem, position ->
                                 val bundle = bundleOf("select" to position)
@@ -42,15 +40,20 @@ class FocusListFragment : BaseFragment<FragmentFocusListBinding>(R.layout.fragme
                         is UiState.Success -> {
                             recyclerView.adapter = listAdapter
 
-                            listAdapter.submitList(it.data) {
+                            listAdapter.submitList(uiState.data) {
                                 recyclerView.post {
-                                    itemFocus()
-                                    setBgGlide(getBgUrl())
+
+                                    lifecycleScope.launch {
+                                        viewModel.focusPosition.collectLatest {
+                                            itemFocus(it)
+                                            setBgGlide(getBgUrl(it))
+                                        }
+                                    }
                                 }
                             }
                         }
                         is UiState.Error -> {
-                            Toast.makeText(requireContext(), "${it.message}", Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(), "${uiState.message}", Toast.LENGTH_LONG).show()
                         }
                     }
                 }
@@ -58,23 +61,17 @@ class FocusListFragment : BaseFragment<FragmentFocusListBinding>(R.layout.fragme
         }
     }
 
-    fun getBgUrl(): String = MoviesRepository.TMDB_POPULAR_MOVIE_IMG_ORIGINAL + listAdapter.currentList[binding.focusLayout.focusPosition].backdrop_path
+    private fun getBgUrl(position: Int): String = MoviesRepository.TMDB_POPULAR_MOVIE_IMG_ORIGINAL + listAdapter.currentList[position].backdrop_path
 
     override fun prevFocus() {
-        binding.focusLayout.apply {
-            prevItemFocus()
-            setBgGlide(getBgUrl())
-        }
+        viewModel.minusPosition()
     }
 
     override fun nextFocus() {
-        binding.focusLayout.apply {
-            nextItemFocus()
-            setBgGlide(getBgUrl())
-        }
+        viewModel.plusPosition()
     }
 
     override fun okFocus() {
-        binding.focusLayout.selectItem()
+        binding.focusLayout.selectItem(viewModel.focusPosition.value)
     }
 }

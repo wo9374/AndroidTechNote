@@ -17,7 +17,6 @@ import com.example.focusablelistview.databinding.LayoutFocusableListviewBinding
 
 class FocusableListView : ConstraintLayout {
     var focusBinding : LayoutFocusableListviewBinding = LayoutFocusableListviewBinding.inflate(LayoutInflater.from(context), this, true)
-    var focusPosition = 0
 
     var itemHighLight = false
     var itemCornerDp = 0F
@@ -76,7 +75,7 @@ class FocusableListView : ConstraintLayout {
         typedArray.recycle()
     }
 
-    fun itemFocus(){
+    fun itemFocus(focusPosition : Int){
         when(recyclerView.layoutManager){
             is FocusCenterScrollManager -> {
                 (recyclerView.layoutManager as FocusCenterScrollManager).apply {
@@ -102,25 +101,7 @@ class FocusableListView : ConstraintLayout {
             .into(focusBinding.bgImg)
     }
 
-    fun prevItemFocus() : Boolean{
-        return if (focusPosition > 0){
-            focusPosition -= 1
-            itemFocus()
-            true
-        }else
-            false
-    }
-
-    fun nextItemFocus() : Boolean{
-        return if (focusPosition < (recyclerView.adapter?.itemCount?.minus(1) ?: 0)){
-            focusPosition += 1
-            itemFocus()
-            true
-        } else
-            false
-    }
-
-    fun selectItem(){
+    fun selectItem(focusPosition: Int){
         recyclerView.findViewHolderForAdapterPosition(focusPosition)
             ?.itemView
             ?.performClick()
