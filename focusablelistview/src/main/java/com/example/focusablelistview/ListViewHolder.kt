@@ -14,23 +14,11 @@ import com.example.focusablelistview.databinding.ItemFocusableBinding
 
 class ListViewHolder(val binding: ItemFocusableBinding) : RecyclerView.ViewHolder(binding.root){
 
-    fun setGlide(glideUrl: String, onImageReadyListener: OnImageReadyListener){
+    fun setGlide(glideUrl: String){
         Glide
             .with(binding.thumbnailImg)
             .load(glideUrl)
             .thumbnail(0.1f)
-            .listener(object : RequestListener<Drawable>{
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                    onImageReadyListener.onImageReady(adapterPosition)
-                    return false
-                }
-
-                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                    onImageReadyListener.onImageReady(adapterPosition)
-                    return false
-                }
-
-            })
             .error(R.drawable.ic_launcher_foreground)
             .into(binding.thumbnailImg)
     }

@@ -9,7 +9,7 @@ import com.example.focusablelistview.ListViewHolder
 class CustomFocusListAdapter(
     override var highLight: Boolean,
     override var radius: Float,
-    override var itemClick: (FocusItem, View) -> Unit
+    override var itemClick: (FocusItem, Int) -> Unit
 ) : ListViewAdapter<FocusItem>(DiffUtil()) {
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {

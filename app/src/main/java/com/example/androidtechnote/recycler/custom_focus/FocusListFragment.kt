@@ -34,10 +34,9 @@ class FocusListFragment : BaseFragment<FragmentFocusListBinding>(R.layout.fragme
                 viewModel.uiState.collectLatest {
                     when (it) {
                         is UiState.Init -> {
-                            listAdapter = CustomFocusListAdapter(itemHighLight, itemCornerDp){ clickItem, view ->
-                                val bundle = bundleOf("select" to focusPosition)
-                                val extras = FragmentNavigatorExtras(view to "focusDetail")
-                                navController.navigate(R.id.focusDetailFragment, bundle, null, extras)
+                            listAdapter = CustomFocusListAdapter(itemHighLight, itemCornerDp){ clickItem, position ->
+                                val bundle = bundleOf("select" to position)
+                                navController.navigate(R.id.focusDetailFragment, bundle)
                             }
                         }
                         is UiState.Success -> {
