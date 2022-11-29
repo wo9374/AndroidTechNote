@@ -7,6 +7,7 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.example.androidtechnote.ble.BLEScanActivity
 import com.example.androidtechnote.camera.camerakit_library.CameraXActivity
 import com.example.androidtechnote.coordinator.bottomsheet.BottomSheetActivity
 import com.example.androidtechnote.coordinator.CoordinatorActivity
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() {
                     bottomSheetBtn.id -> intent = Intent(applicationContext, BottomSheetActivity::class.java)
                     telephonyBtn.id -> intent = Intent(applicationContext, TelephonyManagerActivity::class.java)
                     focusBtn.id -> {intent = Intent(applicationContext, CustomFocusActivity::class.java)}
+                    bleBtn.id -> {intent = Intent(applicationContext, BLEScanActivity::class.java)}
                 }
             }
             startActivity(intent)
