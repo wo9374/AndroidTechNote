@@ -28,7 +28,7 @@ import com.example.androidtechnote.databinding.ActivityBleScanBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class BLEScanActivity : AppCompatActivity() {
+class BleScanActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityBleScanBinding
 
@@ -159,7 +159,7 @@ class BLEScanActivity : AppCompatActivity() {
         }
         override fun onScanFailed(errorCode: Int) {
             super.onScanFailed(errorCode)
-            Toast.makeText(this@BLEScanActivity,"스캔 실패", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@BleScanActivity,"스캔 실패", Toast.LENGTH_SHORT).show()
         }
     }
 

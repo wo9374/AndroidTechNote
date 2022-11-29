@@ -38,7 +38,7 @@
         <activity android:name=".telephonymanager.TelephonyManagerActivity" />
         <activity android:name=".eventobserver.EventObserverActivity" />
         <activity android:name=".ktor.KtorActivity" />
-        <activity android:name=".ble.BLEScanActivity" />
+        <activity android:name=".ble.BleScanActivity" />
 
         <activity android:name=".viewpager2.EmptyActivity" />
         <activity android:name=".viewpager2.ViewPager2Activity" />
