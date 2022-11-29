@@ -12,4 +12,10 @@
     <string name="menu_disconnect">Disconnect</string>
     <string name="menu_scan">Scan</string>
     <string name="menu_stop">Stop</string>
+
+    <string name="ble_bond_none">연결안됨</string>
+    <string name="ble_bond_bonding">연결중</string>
+    <string name="ble_bond_bonded">연결됨</string>
+
+    <string name="ble_no_name">이름없음</string>
 </resources>

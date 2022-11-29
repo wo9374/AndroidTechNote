@@ -33,7 +33,7 @@
 
         <activity
             android:name=".camera.camerakit_library.CameraXActivity"
-            android:theme="@style/CameraTheme" />
+            android:theme="@style/Theme.FullScreen" />
 
         <activity android:name=".telephonymanager.TelephonyManagerActivity" />
         <activity android:name=".eventobserver.EventObserverActivity" />
@@ -54,7 +54,8 @@
         <activity android:name=".recycler.paging3.retrofit.PgRetrofitActivity" />
         <activity android:name=".recycler.paging3.basicforloop.PgBasicActivity" />
         <activity android:name=".recycler.epoxy.EpoxyActivity" />
-        <activity android:name=".recycler.custom_focus.CustomFocusActivity" />
+        <activity android:name=".recycler.custom_focus.CustomFocusActivity"
+            android:theme="@style/Theme.FullScreen"/>
 
         <activity android:name=".myworkmanager.WorkManagerActivity" />
         <activity android:name=".myworkmanager.videodown.FileDownActivity" />
