@@ -6,9 +6,19 @@
 
     <fragment
         android:id="@+id/focusListFragment"
-        android:name="com.example.androidtechnote.recycler.custom_focus.FocusListFragment" />
+        android:name="com.example.androidtechnote.recycler.custom_focus.FocusListFragment">
+
+        <action
+            android:id="@+id/navToDetailFragment"
+            app:destination="@id/focusDetailFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/focusDetailFragment"
-        android:name="com.example.androidtechnote.recycler.custom_focus.FocusDetailFragment" />
+        android:name="com.example.androidtechnote.recycler.custom_focus.FocusDetailFragment" >
+
+        <argument
+            android:name="transName"
+            app:argType="string"/>
+    </fragment>
 </navigation>

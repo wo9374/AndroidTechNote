@@ -9,7 +9,7 @@ class MyDetailAdapter() : DetailAdapter<FocusItem>(DiffUtil()){
 
     override fun onBindViewHolder(holder: DetailViewHolder, position: Int) {
         holder.setTitle(getItem(position).title)
-        holder.setGlide(MoviesRepository.TMDB_POPULAR_MOVIE_IMG_ORIGINAL + getItem(position).poster_path)
+        holder.setGlide(MoviesRepository.TMDB_POPULAR_MOVIE_IMG_ORIGINAL + getItem(position).backdrop_path)
         super.onBindViewHolder(holder, position)
     }
 }

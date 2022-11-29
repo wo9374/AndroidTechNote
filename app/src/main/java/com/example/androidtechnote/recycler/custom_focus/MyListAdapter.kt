@@ -6,15 +6,16 @@ import com.example.customlibrary.MoviesRepository
 import com.example.focusablelistview.ListViewAdapter
 import com.example.focusablelistview.ListViewHolder
 
-class CustomFocusListAdapter(
+class MyListAdapter(
     override var highLight: Boolean,
     override var radius: Float,
-    override var itemClick: (FocusItem, Int) -> Unit
+    override var itemClick: (FocusItem, View, Int) -> Unit
 ) : ListViewAdapter<FocusItem>(DiffUtil()) {
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.setTitle(getItem(position).title)
         holder.setGlide(MoviesRepository.TMDB_POPULAR_MOVIE_IMG_W500 + getItem(position).poster_path)
+        holder.setTransitionName(getItem(position).title)
         super.onBindViewHolder(holder, position)
     }
 }

@@ -12,7 +12,7 @@ abstract class ListViewAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) : List
 
     abstract var highLight : Boolean
     abstract var radius : Float
-    abstract var itemClick: (T, Int) -> Unit
+    abstract var itemClick: (T, View, Int) -> Unit
 
     private var prevPosition = 0
 
@@ -54,7 +54,7 @@ abstract class ListViewAdapter<T>(diffCallback: DiffUtil.ItemCallback<T>) : List
                 }
 
                 binding.root.setOnClickListener {
-                    itemClick(getItem(adapterPosition), adapterPosition)
+                    itemClick(getItem(adapterPosition), it, adapterPosition)
                 }
             }
         }

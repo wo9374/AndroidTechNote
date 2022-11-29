@@ -27,6 +27,10 @@ class ListViewHolder(val binding: ItemFocusableBinding) : RecyclerView.ViewHolde
         binding.title.text = titleText
     }
 
+    fun setTransitionName(name: String){
+        binding.root.transitionName = name
+    }
+
     private fun expansionView() : ViewPropertyAnimatorCompat {
         return ViewCompat
             .animate(binding.root)

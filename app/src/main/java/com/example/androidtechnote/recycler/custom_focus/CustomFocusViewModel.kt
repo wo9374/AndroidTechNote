@@ -48,6 +48,10 @@ class CustomFocusViewModel : ViewModel(){
             }
         }
     }
+
+    fun setPosition(position: Int){
+        focusPosition.value = position
+    }
 }
 
 sealed class UiState<out T> {

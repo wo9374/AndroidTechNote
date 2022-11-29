@@ -3,9 +3,9 @@ package com.example.androidtechnote.recycler.custom_focus
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.FragmentFocusListBinding
 import com.example.androidtechnote.recycler.base.BaseFragment
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class FocusListFragment : BaseFragment<FragmentFocusListBinding>(R.layout.fragment_focus_list){
     lateinit var viewModel: CustomFocusViewModel
 
-    lateinit var listAdapter: CustomFocusListAdapter
+    lateinit var listAdapter: MyListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,16 +27,18 @@ class FocusListFragment : BaseFragment<FragmentFocusListBinding>(R.layout.fragme
         binding.lifecycleOwner = this
 
         binding.focusLayout.apply {
+
+            listAdapter = MyListAdapter(itemHighLight, itemCornerDp){ clickItem, view, position ->
+                val extras = FragmentNavigatorExtras(view to clickItem.title)
+                val action = FocusListFragmentDirections.navToDetailFragment(transName= clickItem.title)
+                navController.navigate(action, extras)
+            }
+
             lifecycleScope.launchWhenStarted {
 
                 viewModel.uiState.collectLatest { uiState ->
                     when (uiState) {
-                        is UiState.Init -> {
-                            listAdapter = CustomFocusListAdapter(itemHighLight, itemCornerDp){ clickItem, position ->
-                                val bundle = bundleOf("select" to position)
-                                navController.navigate(R.id.focusDetailFragment, bundle)
-                            }
-                        }
+                        is UiState.Init -> {}
                         is UiState.Success -> {
                             recyclerView.adapter = listAdapter
 

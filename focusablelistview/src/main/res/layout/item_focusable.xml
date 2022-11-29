@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:transitionName="focusList">
+        android:layout_height="wrap_content">
 
         <com.example.focusablelistview.RoundedImageView
             android:id="@+id/bg_highlight"
@@ -14,7 +12,6 @@
             android:layout_height="94dp"
             android:alpha="0"
             android:src="@color/white"
-            android:transitionName="focusDetail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
