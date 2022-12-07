@@ -31,6 +31,10 @@
         android:theme="@style/Theme.AndroidTechNote"
         android:usesCleartextTraffic="true">
 
+        <service
+            android:name=".ble.BluetoothLeService"
+            android:enabled="true"/>
+
         <activity
             android:name=".camera.camerakit_library.CameraXActivity"
             android:theme="@style/Theme.FullScreen" />
@@ -38,7 +42,9 @@
         <activity android:name=".telephonymanager.TelephonyManagerActivity" />
         <activity android:name=".eventobserver.EventObserverActivity" />
         <activity android:name=".ktor.KtorActivity" />
+
         <activity android:name=".ble.BleScanActivity" />
+        <activity android:name=".ble.DeviceControlActivity" />
 
         <activity android:name=".viewpager2.EmptyActivity" />
         <activity android:name=".viewpager2.ViewPager2Activity" />
@@ -72,6 +78,5 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 </manifest>
