@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.ItemBleListBinding
+import com.example.androidtechnote.room.model.Test
 
-class BleListAdapter : ListAdapter<BluetoothDevice, BleListViewHolder>(DiffUtil()){
+class BleListAdapter(val itemClick: (Int) -> Unit) : ListAdapter<BluetoothDevice, BleListViewHolder>(DiffUtil()){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BleListViewHolder {
         val binding = ItemBleListBinding.inflate(LayoutInflater.from(parent.context),parent, false)
         return BleListViewHolder(binding)
@@ -17,6 +18,10 @@ class BleListAdapter : ListAdapter<BluetoothDevice, BleListViewHolder>(DiffUtil(
 
     override fun onBindViewHolder(holder: BleListViewHolder, position: Int) {
         holder.bind(getItem(position))
+
+        holder.binding.connect.setOnClickListener {
+            itemClick(position)
+        }
     }
 }
 

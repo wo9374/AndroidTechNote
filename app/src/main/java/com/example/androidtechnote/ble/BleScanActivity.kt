@@ -6,15 +6,15 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.ScanCallback
+import android.bluetooth.le.ScanFilter
 import android.bluetooth.le.ScanResult
+import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
+import android.os.ParcelUuid
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
@@ -28,16 +28,18 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidtechnote.R
-import com.example.androidtechnote.coordinator.bottomsheet.BottomSheetTodoAdapter
 import com.example.androidtechnote.databinding.ActivityBleScanBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+
 
 class BleScanActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityBleScanBinding
 
-    private val listAdapter = BleListAdapter()
+    private val listAdapter = BleListAdapter(){
+        selectDevice(it)
+    }
 
     private fun PackageManager.missingSystemFeature(name: String): Boolean = !hasSystemFeature(name)
 
@@ -67,8 +69,11 @@ class BleScanActivity : AppCompatActivity() {
             finish()
         }
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && bluetoothAdapter.isEnabled){
-            scanLeDevice(true)
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            && bluetoothAdapter.isEnabled){
+            if (arrayDevices.isEmpty()){
+                scanLeDevice(true)
+            }
         }
     }
 
@@ -162,27 +167,26 @@ class BleScanActivity : AppCompatActivity() {
                 }
             }
         }
-        override fun onBatchScanResults(results: MutableList<ScanResult>?) {
-            super.onBatchScanResults(results)
-            results?.let {
-                for (result in it){
-                    if (result.device.name != null){
-                        if (!arrayDevices.contains(result.device))
-                            arrayDevices.add(result.device)
-                    }
-                }
-            }
-        }
         override fun onScanFailed(errorCode: Int) {
             super.onScanFailed(errorCode)
             Toast.makeText(this@BleScanActivity,"스캔 실패", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private val scanPeriod: Long = 10000
+    private val scanPeriod: Long = 3000
     private fun scanLeDevice(enable: Boolean){
         when (enable) {
             true -> {
+                // 미리 정의된 검색 기간 후 검색을 중지
+                /*handler.postDelayed({
+                    mScanning = false
+                    bluetoothAdapter.bluetoothLeScanner.stopScan(leScanCallback)
+                    invalidateOptionsMenu()
+
+                    Log.d("스캔 완료","찾은 Device: ${arrayDevices.size}")
+                }, scanPeriod)*/
+
+                //Coroutine Ver.
                 lifecycleScope.launch {
                     delay(scanPeriod)
 
@@ -193,18 +197,20 @@ class BleScanActivity : AppCompatActivity() {
                     listAdapter.submitList(arrayDevices)
                 }
 
-                // 미리 정의된 검색 기간 후 검색을 중지
-                /*handler.postDelayed({
-                    mScanning = false
-                    bluetoothAdapter.bluetoothLeScanner.stopScan(leScanCallback)
-                    invalidateOptionsMenu()
-
-                    Log.d("스캔 완료","찾은 Device: ${arrayDevices.size}")
-                }, scanPeriod)*/
-
                 mScanning = true
                 arrayDevices.clear()
-                bluetoothAdapter.bluetoothLeScanner.startScan(leScanCallback)
+
+                //TODO 스캔필터 안됨..
+                /*val scanFilters: MutableList<ScanFilter> = ArrayList()
+                val scanFilter = ScanFilter.Builder()
+                    .setServiceUuid(ParcelUuid.fromString(BluetoothLeService.SERIAL_PORT_SERVICE))
+                    .build()
+
+                scanFilters.add(scanFilter)*/
+                val scanSettings = ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_POWER).build()
+
+                //bluetoothAdapter.bluetoothLeScanner.startScan(scanFilters, scanSettings, leScanCallback)
+                bluetoothAdapter.bluetoothLeScanner.startScan(null, scanSettings, leScanCallback)
             }
             else -> {
                 mScanning = false
@@ -214,14 +220,14 @@ class BleScanActivity : AppCompatActivity() {
         invalidateOptionsMenu()
     }
 
-    /*private fun selectDevice(position: Int){
+    private fun selectDevice(position: Int){
         val device = arrayDevices[position]
         val intent = Intent(this, DeviceControlActivity::class.java)
         intent.putExtra("address", device.address)
 
         if (mScanning) scanLeDevice(false)
         startActivity(intent)
-    }*/
+    }
 
     val Int.dp: Int
         get() {
