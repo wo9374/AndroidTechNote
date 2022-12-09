@@ -14,7 +14,9 @@ import android.os.Binder
 import android.os.IBinder
 import com.example.androidtechnote.DlogUtil
 import java.math.BigInteger
+import java.nio.charset.StandardCharsets
 import java.util.*
+
 
 class BluetoothLeService : Service() {
 
@@ -45,13 +47,13 @@ class BluetoothLeService : Service() {
 
         //심전도센서
         val ECG_SERVICE = UUID.fromString("be940000-7333-be46-b7ae-689e71722bd5")
-        val ECG_MEASUREMENT = UUID.fromString("be940001-7333-be46-b7ae-689e71722bd5")
-        val ECG_CONTROL_POINT = UUID.fromString("be940003-7333-be46-b7ae-689e71722bd5")
+        val ECG_DISPLAY = UUID.fromString("be940001-7333-be46-b7ae-689e71722bd5")
+        val ECG_MEASUREMENT = UUID.fromString("be940003-7333-be46-b7ae-689e71722bd5")
+        val ECG_CONTROL_POINT = UUID.fromString("be940002-7333-be46-b7ae-689e71722bd5")
 
         val ECG_DISPLAY_VALUE_1 = BigInteger("030207000264B7", 16).toByteArray()
         val ECG_DISPLAY_VALUE_2 = BigInteger("03090900010302F38B", 16).toByteArray()
         val ECG_DISPLAY_VALUE_3 = BigInteger("030B08000101DC8A", 16).toByteArray()
-
     }
 
     var connectionState = STATE_DISCONNECTED
@@ -123,7 +125,7 @@ class BluetoothLeService : Service() {
         }
 
         override fun onCharacteristicChanged(gatt: BluetoothGatt?, characteristic: BluetoothGattCharacteristic?) {
-            DlogUtil.d("ddd", "onCharacteristicChanged")
+            //DlogUtil.d("ddd", "onCharacteristicChanged")
             broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic)
         }
 
@@ -181,12 +183,18 @@ class BluetoothLeService : Service() {
                     val data = it.value[1].toString()
                     intent.putExtra(EXTRA_HEART_RATE, data)
                 }
+
                 ECG_MEASUREMENT -> {
-                    DlogUtil.d("ddd", "broadcastUpdate ECG_MEASUREMENT")
+                    var data = ""
+                    it.value.forEach { byte ->
+                        data += byte.toString()
+                    }
+                    DlogUtil.d("ddd", "broadcastUpdate ECG_MEASUREMENT $data")
                 }
                 else -> {}
             }
         }
         sendBroadcast(intent)
     }
+
 }
