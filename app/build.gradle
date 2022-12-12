@@ -50,6 +50,10 @@ android {
     }
 }
 
+repositories {
+    maven { url 'https://jitpack.io' } //MpChart
+}
+
 dependencies {
     implementation(project(':focusablelistview'))
 
@@ -118,4 +122,6 @@ dependencies {
 
     //Indicator Library
     implementation 'com.tbuonomo:dotsindicator:4.2'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

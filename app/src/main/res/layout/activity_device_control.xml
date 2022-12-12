@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ap="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ble.DeviceControlActivity">
@@ -50,23 +51,24 @@
             app:layout_constraintStart_toEndOf="@id/txt2"
             app:layout_constraintTop_toTopOf="@id/txt2" />
 
-        <Button
-            android:id="@+id/ecg_display"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="심전도 화면"
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/ecg_graph"
+            android:layout_width="400dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/heartRate" />
 
         <Button
-            android:id="@+id/ecg_mesurement"
+            android:id="@+id/ecg_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:text="심전도 측정"
-            app:layout_constraintStart_toEndOf="@id/ecg_display"
-            app:layout_constraintTop_toBottomOf="@id/heartRate" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ecg_graph" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

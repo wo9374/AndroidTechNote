@@ -32,6 +32,7 @@ class BluetoothLeService : Service() {
         val ACTION_DATA_AVAILABLE = "ACTION_DATA_AVAILABLE"
         val EXTRA_BATTERY = "EXTRA_BATTERY"
         val EXTRA_HEART_RATE = "EXTRA_HEART_RATE"
+        val EXTRA_ECG = "EXTRA_ECG"
 
         //Notify UUID
         val CLIENT_CHARACTERISTIC_CONFIG_UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb") //0x2902
@@ -185,16 +186,12 @@ class BluetoothLeService : Service() {
                 }
 
                 ECG_MEASUREMENT -> {
-                    var data = ""
-                    it.value.forEach { byte ->
-                        data += byte.toString()
-                    }
-                    DlogUtil.d("ddd", "broadcastUpdate ECG_MEASUREMENT $data")
+                    DlogUtil.d("ddd", "broadcastUpdate ECG_MEASUREMENT ${it.value.toList()}")
+                    intent.putExtra(EXTRA_ECG, it.value)
                 }
                 else -> {}
             }
         }
         sendBroadcast(intent)
     }
-
 }
