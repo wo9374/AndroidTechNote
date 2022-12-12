@@ -52,9 +52,9 @@ class BluetoothLeService : Service() {
         val ECG_MEASUREMENT = UUID.fromString("be940003-7333-be46-b7ae-689e71722bd5")
         val ECG_CONTROL_POINT = UUID.fromString("be940002-7333-be46-b7ae-689e71722bd5")
 
-        val ECG_DISPLAY_VALUE_1 = BigInteger("030207000264B7", 16).toByteArray()
+        val ECG_DISPLAY_VALUE_1 = BigInteger("030207000264B7", 16).toByteArray()  //ECG 워치 화면 display
         val ECG_DISPLAY_VALUE_2 = BigInteger("03090900010302F38B", 16).toByteArray()
-        val ECG_DISPLAY_VALUE_3 = BigInteger("030B08000101DC8A", 16).toByteArray()
+        val ECG_DISPLAY_VALUE_3 = BigInteger("030B08000101DC8A", 16).toByteArray() //측정 시작
     }
 
     var connectionState = STATE_DISCONNECTED
@@ -184,7 +184,7 @@ class BluetoothLeService : Service() {
                 }
 
                 ECG_MEASUREMENT -> {
-                    DlogUtil.d("ddd", "broadcastUpdate ECG_MEASUREMENT")
+                    DlogUtil.d("ddd", "broadcastUpdate ECG_MEASUREMENT ${it.value.toList()}")
                     intent.putExtra(EXTRA_ECG, it.value)
                 }
                 else -> {}

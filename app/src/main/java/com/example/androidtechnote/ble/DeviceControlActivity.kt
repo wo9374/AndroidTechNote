@@ -210,7 +210,7 @@ class DeviceControlActivity : AppCompatActivity() {
                     val logData = intent.getByteArrayExtra(BluetoothLeService.EXTRA_ECG)?.map {
                         String.format("0x%02x ", it).replace("0x","")
                     }?.let {
-                        DlogUtil.d("ddd", it)
+                        //DlogUtil.d("ddd", it)
                     }
 
                     val dataList = intent.getByteArrayExtra(BluetoothLeService.EXTRA_ECG)?.map {
