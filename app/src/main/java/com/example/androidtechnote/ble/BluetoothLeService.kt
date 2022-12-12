@@ -25,36 +25,42 @@ class BluetoothLeService : Service() {
         const val STATE_CONNECTING = 1
         const val STATE_CONNECTED = 2
 
-        val ACTION_GATT_CONNECTED = "ACTION_GATT_CONNECTED"
-        val ACTION_GATT_DISCONNECTED = "ACTION_GATT_DISCONNECTED"
-        val ACTION_GATT_SERVICES_DISCOVERED = "ACTION_GATT_DISCOVERED"
+        const val ACTION_GATT_CONNECTED = "ACTION_GATT_CONNECTED"
+        const val ACTION_GATT_DISCONNECTED = "ACTION_GATT_DISCONNECTED"
+        const val ACTION_GATT_SERVICES_DISCOVERED = "ACTION_GATT_DISCOVERED"
 
-        val ACTION_DATA_AVAILABLE = "ACTION_DATA_AVAILABLE"
-        val EXTRA_BATTERY = "EXTRA_BATTERY"
-        val EXTRA_HEART_RATE = "EXTRA_HEART_RATE"
-        val EXTRA_ECG = "EXTRA_ECG"
+        const val ACTION_DATA_AVAILABLE = "ACTION_DATA_AVAILABLE"
+        const val EXTRA_BATTERY = "EXTRA_BATTERY"
+        const val EXTRA_HEART_RATE = "EXTRA_HEART_RATE"
+        const val EXTRA_ECG = "EXTRA_ECG"
 
         //Notify UUID
-        val CLIENT_CHARACTERISTIC_CONFIG_UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb") //0x2902
+        val CLIENT_CHARACTERISTIC_CONFIG_UUID: UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb") //0x2902
 
         //배터리
-        val BATTERY_SERVICE= UUID.fromString("0000180f-0000-1000-8000-00805f9b34fb")            //0x180F
-        val BATTERY_LEVEL= UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb")              //0x2A19
+        val BATTERY_SERVICE: UUID = UUID.fromString("0000180f-0000-1000-8000-00805f9b34fb")            //0x180F
+        val BATTERY_LEVEL: UUID = UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb")              //0x2A19
 
         //심박센서
-        val HEART_RATE_SERVICE = UUID.fromString("0000180d-0000-1000-8000-00805f9b34fb")        //0x180D
-        val HEART_RATE_MEASUREMENT = UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb")    //0x2A37
-        val HEART_RATE_CONTROL_POINT = UUID.fromString("00002a39-0000-1000-8000-00805f9b34fb")  //0x2A39
+        val HEART_RATE_SERVICE: UUID = UUID.fromString("0000180d-0000-1000-8000-00805f9b34fb")        //0x180D
+        val HEART_RATE_MEASUREMENT: UUID = UUID.fromString("00002a37-0000-1000-8000-00805f9b34fb")    //0x2A37
+        val HEART_RATE_CONTROL_POINT: UUID = UUID.fromString("00002a39-0000-1000-8000-00805f9b34fb")  //0x2A39
 
         //심전도센서
-        val ECG_SERVICE = UUID.fromString("be940000-7333-be46-b7ae-689e71722bd5")
-        val ECG_DISPLAY = UUID.fromString("be940001-7333-be46-b7ae-689e71722bd5")
-        val ECG_MEASUREMENT = UUID.fromString("be940003-7333-be46-b7ae-689e71722bd5")
-        val ECG_CONTROL_POINT = UUID.fromString("be940002-7333-be46-b7ae-689e71722bd5")
+        val ECG_MEASUREMENT: UUID = UUID.fromString("be940003-7333-be46-b7ae-689e71722bd5")
+        val ECG_CONTROL_POINT: UUID = UUID.fromString("be940002-7333-be46-b7ae-689e71722bd5")
 
-        val ECG_DISPLAY_VALUE_1 = BigInteger("030207000264B7", 16).toByteArray()  //ECG 워치 화면 display
-        val ECG_DISPLAY_VALUE_2 = BigInteger("03090900010302F38B", 16).toByteArray()
-        val ECG_DISPLAY_VALUE_3 = BigInteger("030B08000101DC8A", 16).toByteArray() //측정 시작
+
+        val WATCH_SERVICE: UUID = UUID.fromString("be940000-7333-be46-b7ae-689e71722bd5")
+        val WATCH_WRITE_CHARACTER: UUID = UUID.fromString("be940001-7333-be46-b7ae-689e71722bd5")
+
+        val ECG_VALUE_DISPLAY_ON: ByteArray = BigInteger("030207000264B7", 16).toByteArray()          //ECG 워치 화면 display
+        val ECG_DISPLAY_VALUE_2: ByteArray = BigInteger("03090900010302F38B", 16).toByteArray()
+        val ECG_VALUE_MEASUREMENT_START: ByteArray = BigInteger("030B08000101DC8A", 16).toByteArray() //ECG 측정 시작
+
+
+        //sync first
+        val FUNCTION_1: ByteArray = BigInteger("03090900000001F3D9", 16).toByteArray()
     }
 
     var connectionState = STATE_DISCONNECTED

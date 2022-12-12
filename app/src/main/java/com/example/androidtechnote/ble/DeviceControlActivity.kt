@@ -35,7 +35,7 @@ class DeviceControlActivity : AppCompatActivity() {
     private var deviceAddress: String = ""
     private var bluetoothLeService: BluetoothLeService? = null
 
-    var ecgDisplayChar : BluetoothGattCharacteristic? = null
+    var writeWatchChar : BluetoothGattCharacteristic? = null
     var ecgMeasurementChar : BluetoothGattCharacteristic? = null
 
     private val serviceConnection = object : ServiceConnection {
@@ -58,93 +58,16 @@ class DeviceControlActivity : AppCompatActivity() {
         val gattServiceIntent = Intent(this, BluetoothLeService::class.java)
         bindService(gattServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
 
-        binding.ecgBtn.setOnClickListener {
-            ecgDisplayChar?.let { ecgDisplay ->
-                ecgDisplay.apply {
-                    value = BluetoothLeService.ECG_DISPLAY_VALUE_1
+        initialECGLayout()
+
+        binding.testBtn.setOnClickListener {
+            writeWatchChar?.let { writeWatch ->
+                writeWatch.apply {
+                    value = BluetoothLeService.FUNCTION_1
                     writeType = BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE
                     bluetoothLeService?.bluetoothGatt?.writeCharacteristic(this)
                 }
-
-                ecgDisplay.apply {
-                    value = BluetoothLeService.ECG_DISPLAY_VALUE_3
-                    bluetoothLeService?.bluetoothGatt?.writeCharacteristic(ecgDisplayChar)
-                }
             }
-
-            ecgMeasurementChar?.let { ecgMeasure ->
-                bluetoothLeService?.bluetoothGatt?.setCharacteristicNotification(ecgMeasure, true)
-                val descriptor: BluetoothGattDescriptor = ecgMeasure.getDescriptor(BluetoothLeService.CLIENT_CHARACTERISTIC_CONFIG_UUID).apply {
-                    value = BluetoothGattDescriptor.ENABLE_INDICATION_VALUE
-                }
-
-                bluetoothLeService?.bluetoothGatt?.writeDescriptor(descriptor)
-            }
-        }
-
-        binding.ecgGraph.apply {
-            extraBottomOffset = 5f
-            description.isEnabled = false   // 차트 옆 별도로 표시되는 description
-            legend.isEnabled = false        // 차트 아래 색과 라벨을 나타내는 설정 (여러 라인 구분할때)
-            setScaleEnabled(false)          // 모든 확대/축소 비활성화
-            setDrawGridBackground(false)    // 격자 구조 유무
-
-            // X축 설정
-            xAxis.run {
-                setDrawAxisLine(false)
-                setDrawGridLines(false)
-                setDrawLabels(false)
-                position = XAxis.XAxisPosition.BOTTOM // x축 데이터 표시 위치
-                //setValueFormatter(new ChartXValueFormatter()); //X축의 데이터를 제 가공함. new ChartXValueFormatter은 Custom한 소스
-                //setLabelCount(5, true); //X축의 데이터를 최대 몇개 까지 나타낼지에 대한 설정 5개 force가 true 이면 반드시 보여줌
-                //textColor = ContextCompat.getColor(context, R.color.textColor); //텍스트 컬러 설정
-                //gridColor = ContextCompat.getColor(context, R.color.textColor); //그리드 줄의 컬러 설정
-
-                spaceMin = 0.1f // Chart 맨 왼쪽 간격 띄우기
-                spaceMax = 0.1f // Chart 맨 오른쪽 간격 띄우기
-            }
-
-            // Y축 왼쪽 설정
-            axisLeft.run {
-                setDrawAxisLine(false)
-                setDrawGridLines(false)
-                setDrawLabels(false)
-
-                //axisLineWidth = 2f
-                axisMinimum = (-260).toFloat()
-                axisMaximum = 260.toFloat()
-            }
-
-            // Y축 오른쪽 설정
-            axisRight.run {
-                isEnabled = false     // 우측 Y축 disabled
-            }
-        }
-    }
-
-    fun createChartData(data : List<Int>){
-        val entries = mutableListOf<Entry>()  //차트 데이터 셋에 담겨질 데이터
-
-        data.forEachIndexed { index, i ->
-            entries.add(Entry(index.toFloat(), i.toFloat()))
-
-            val set1 = LineDataSet(entries, "")
-
-            set1.color = Color.RED              //Line Color 설정
-            set1.setDrawCircles(false)          //Line Dot 설정
-            //set1.setCircleColor(Color.BLUE)      //Line Circle Color 설정
-            set1.setDrawCircleHole(false)       //Line DotHole 설정
-            //set1.circleHoleColor = Color.GREEN   //Line Hole Circle Color 설정
-
-            val lineData = LineData() //LineDataSet 을 담는 그릇 여러개의 라인 데이터가 들어갈 수 있다.
-            lineData.addDataSet(set1)
-            lineData.apply {
-                //setValueTextColor(color: Int)
-                //setValueTextSize(size: Float)
-            }
-
-            binding.ecgGraph.data = lineData
-            binding.ecgGraph.invalidate()
         }
     }
 
@@ -252,9 +175,9 @@ class DeviceControlActivity : AppCompatActivity() {
                     }
                 }
 
-                BluetoothLeService.ECG_SERVICE -> {
+                BluetoothLeService.WATCH_SERVICE -> {
                     DlogUtil.d("ddd", "selectCharacteristicData ECG_SERVICE")
-                    ecgDisplayChar = gattService.getCharacteristic(BluetoothLeService.ECG_DISPLAY)
+                    writeWatchChar = gattService.getCharacteristic(BluetoothLeService.WATCH_WRITE_CHARACTER)
                     ecgMeasurementChar = gattService.getCharacteristic(BluetoothLeService.ECG_MEASUREMENT)
                 }
             }
@@ -269,5 +192,98 @@ class DeviceControlActivity : AppCompatActivity() {
             addAction(BluetoothLeService.ACTION_DATA_AVAILABLE)
         }
         return intentFilter
+    }
+
+
+
+    private fun initialECGLayout(){
+        binding.ecgBtn.setOnClickListener {
+            writeWatchChar?.let { writeWatch ->
+                writeWatch.apply {
+                    value = BluetoothLeService.ECG_VALUE_DISPLAY_ON
+                    writeType = BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE
+                    bluetoothLeService?.bluetoothGatt?.writeCharacteristic(this)
+                }
+
+                writeWatch.apply {
+                    value = BluetoothLeService.ECG_VALUE_MEASUREMENT_START
+                    bluetoothLeService?.bluetoothGatt?.writeCharacteristic(writeWatchChar)
+                }
+            }
+
+            ecgMeasurementChar?.let { ecgMeasure ->
+                bluetoothLeService?.bluetoothGatt?.setCharacteristicNotification(ecgMeasure, true)
+                val descriptor: BluetoothGattDescriptor = ecgMeasure.getDescriptor(BluetoothLeService.CLIENT_CHARACTERISTIC_CONFIG_UUID).apply {
+                    value = BluetoothGattDescriptor.ENABLE_INDICATION_VALUE
+                }
+
+                bluetoothLeService?.bluetoothGatt?.writeDescriptor(descriptor)
+            }
+        }
+
+        binding.ecgGraph.apply {
+            extraBottomOffset = 5f
+            description.isEnabled = false   // 차트 옆 별도로 표시되는 description
+            legend.isEnabled = false        // 차트 아래 색과 라벨을 나타내는 설정 (여러 라인 구분할때)
+            setScaleEnabled(false)          // 모든 확대/축소 비활성화
+            setDrawGridBackground(false)    // 격자 구조 유무
+
+            // X축 설정
+            xAxis.run {
+                setDrawAxisLine(false)
+                setDrawGridLines(false)
+                setDrawLabels(false)
+                position = XAxis.XAxisPosition.BOTTOM // x축 데이터 표시 위치
+                //setValueFormatter(new ChartXValueFormatter()); //X축의 데이터를 제 가공함. new ChartXValueFormatter은 Custom한 소스
+                //setLabelCount(5, true); //X축의 데이터를 최대 몇개 까지 나타낼지에 대한 설정 5개 force가 true 이면 반드시 보여줌
+                //textColor = ContextCompat.getColor(context, R.color.textColor); //텍스트 컬러 설정
+                //gridColor = ContextCompat.getColor(context, R.color.textColor); //그리드 줄의 컬러 설정
+
+                spaceMin = 0.1f // Chart 맨 왼쪽 간격 띄우기
+                spaceMax = 0.1f // Chart 맨 오른쪽 간격 띄우기
+            }
+
+            // Y축 왼쪽 설정
+            axisLeft.run {
+                setDrawAxisLine(false)
+                setDrawGridLines(false)
+                setDrawLabels(false)
+
+                //axisLineWidth = 2f
+                axisMinimum = (-260).toFloat()
+                axisMaximum = 260.toFloat()
+            }
+
+            // Y축 오른쪽 설정
+            axisRight.run {
+                isEnabled = false     // 우측 Y축 disabled
+            }
+        }
+    }
+
+    fun createChartData(data : List<Int>){
+        val entries = mutableListOf<Entry>()  //차트 데이터 셋에 담겨질 데이터
+
+        data.forEachIndexed { index, i ->
+            entries.add(Entry(index.toFloat(), i.toFloat()))
+
+            val set1 = LineDataSet(entries, "")
+
+            set1.color = Color.RED              //Line Color 설정
+            set1.setDrawCircles(false)          //Line Dot 설정
+            //set1.setCircleColor(Color.BLUE)      //Line Circle Color 설정
+            set1.setDrawCircleHole(false)       //Line DotHole 설정
+            //set1.circleHoleColor = Color.GREEN   //Line Hole Circle Color 설정
+
+            val lineData = LineData() //LineDataSet 을 담는 그릇 여러개의 라인 데이터가 들어갈 수 있다.
+            lineData.addDataSet(set1)
+            lineData.apply {
+                //setValueTextColor(color: Int)
+                //setValueTextSize(size: Float)
+            }
+
+            binding.ecgGraph.data = lineData
+            binding.ecgGraph.invalidate()
+        }
     }
 }
