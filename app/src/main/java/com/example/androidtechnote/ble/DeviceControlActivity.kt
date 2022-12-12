@@ -15,18 +15,15 @@ import android.os.IBinder
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.androidtechnote.DlogUtil
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.ActivityDeviceControlBinding
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -40,9 +37,6 @@ class DeviceControlActivity : AppCompatActivity() {
 
     var ecgDisplayChar : BluetoothGattCharacteristic? = null
     var ecgMeasurementChar : BluetoothGattCharacteristic? = null
-
-    var batteryService = false
-    var heartService = false
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceDisconnected(p0: ComponentName?) {
@@ -85,10 +79,6 @@ class DeviceControlActivity : AppCompatActivity() {
                 }
 
                 bluetoothLeService?.bluetoothGatt?.writeDescriptor(descriptor)
-                /*lifecycleScope.launch {
-                    delay(300)
-                    bluetoothLeService?.bluetoothGatt?.writeDescriptor(descriptor)
-                }*/
             }
         }
 
@@ -219,8 +209,9 @@ class DeviceControlActivity : AppCompatActivity() {
 
                     val logData = intent.getByteArrayExtra(BluetoothLeService.EXTRA_ECG)?.map {
                         String.format("0x%02x ", it).replace("0x","")
-                    } ?: arrayListOf()
-                    DlogUtil.d("ddd", logData)
+                    }?.let {
+                        DlogUtil.d("ddd", it)
+                    }
 
                     val dataList = intent.getByteArrayExtra(BluetoothLeService.EXTRA_ECG)?.map {
                         it.toInt()
@@ -231,15 +222,6 @@ class DeviceControlActivity : AppCompatActivity() {
         }
     }
 
-    //바이트로 저장된 값을 hex(16 진수로 표현)
-    fun getByteToHexString(buf: ByteArray): String {
-        var Hex_Value = ""
-        for (i in buf.indices) {
-            Hex_Value += String.format("0x%02x ", buf[i]) //x가 소문자면 소문자 출력, 대문자면 대문자 출력
-        }
-        return Hex_Value
-    }
-
     private fun selectCharacteristicData(gattServices: List<BluetoothGattService>?) {
         if (gattServices == null) return
 
@@ -248,25 +230,25 @@ class DeviceControlActivity : AppCompatActivity() {
                 BluetoothLeService.BATTERY_SERVICE -> {
                     DlogUtil.d("ddd", "selectCharacteristicData BATTERY_SERVICE")
                     val batteryChar = gattService.getCharacteristic(BluetoothLeService.BATTERY_LEVEL)
-                    if (batteryService) bluetoothLeService?.bluetoothGatt?.setCharacteristicNotification(batteryChar, true)
+                    bluetoothLeService?.bluetoothGatt?.setCharacteristicNotification(batteryChar, true)
 
                     val descriptor = batteryChar.getDescriptor(BluetoothLeService.CLIENT_CHARACTERISTIC_CONFIG_UUID).apply {
                         value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
                     }
-                    if (batteryService) bluetoothLeService?.bluetoothGatt?.writeDescriptor(descriptor)
+                    bluetoothLeService?.bluetoothGatt?.writeDescriptor(descriptor)
                 }
 
                 BluetoothLeService.HEART_RATE_SERVICE -> {
                     val heartRateChar = gattService.getCharacteristic(BluetoothLeService.HEART_RATE_MEASUREMENT)
-                    if (heartService) bluetoothLeService?.bluetoothGatt?.setCharacteristicNotification(heartRateChar, true)
+                    bluetoothLeService?.bluetoothGatt?.setCharacteristicNotification(heartRateChar, true)
 
                     val descriptor: BluetoothGattDescriptor = heartRateChar.getDescriptor(BluetoothLeService.CLIENT_CHARACTERISTIC_CONFIG_UUID).apply {
                         value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
                     }
-                    lifecycleScope.launch {
+
+                    lifecycleScope.launch{
                         delay(300)
-                        if (heartService) bluetoothLeService?.bluetoothGatt?.writeDescriptor(descriptor)
-                        DlogUtil.d("ddd", "selectCharacteristicData HEART_RATE_SERVICE")
+                        bluetoothLeService?.bluetoothGatt?.writeDescriptor(descriptor)
                     }
                 }
 

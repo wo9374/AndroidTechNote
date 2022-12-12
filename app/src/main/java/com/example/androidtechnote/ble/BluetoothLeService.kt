@@ -142,27 +142,25 @@ class BluetoothLeService : Service() {
 
             if (gatt?.services == null) return
 
-            gatt.services.forEach{ gattService ->
-                when (gattService.uuid){
-                    BATTERY_SERVICE -> {
-                        DlogUtil.d("ddd", "onDescriptorWrite BATTERY_SERVICE")
-                        val characteristic = gattService.getCharacteristic(BATTERY_LEVEL)
-                        characteristic.value = byteArrayOf(1, 1)
-                        gatt.writeCharacteristic(characteristic)
-                    }
-                    HEART_RATE_SERVICE -> {
-                        DlogUtil.d("ddd", "onDescriptorWrite HEART_RATE_SERVICE")
-                        val characteristic = gattService.getCharacteristic(HEART_RATE_CONTROL_POINT)
-                        characteristic.value = byteArrayOf(1, 1)
-                        gatt.writeCharacteristic(characteristic)
-                    }
+            when(descriptor?.characteristic?.uuid){
+                BATTERY_LEVEL -> {
+                    DlogUtil.d("ddd", "onDescriptorWrite BATTERY_LEVEL")
+                    val characteristic = gatt.getService(BATTERY_SERVICE).getCharacteristic(BATTERY_LEVEL)
+                    characteristic.value = byteArrayOf(1, 1)
+                    gatt.writeCharacteristic(characteristic)
+                }
+                HEART_RATE_MEASUREMENT -> {
+                    DlogUtil.d("ddd", "onDescriptorWrite HEART_RATE_MEASUREMENT")
+                    val characteristic = gatt.getService(HEART_RATE_SERVICE).getCharacteristic(HEART_RATE_CONTROL_POINT)
+                    characteristic.value = byteArrayOf(1, 1)
+                    gatt.writeCharacteristic(characteristic)
+                }
 
-                    ECG_SERVICE -> {
-                        DlogUtil.d("ddd", "onDescriptorWrite ECG_SERVICE")
-                        val characteristic = gattService.getCharacteristic(ECG_CONTROL_POINT)
-                        characteristic.value = byteArrayOf(1, 1)
-                        gatt.writeCharacteristic(characteristic)
-                    }
+                ECG_MEASUREMENT -> {
+                    DlogUtil.d("ddd", "onDescriptorWrite ECG_MEASUREMENT")
+                    val characteristic = gatt.getService(ECG_SERVICE).getCharacteristic(ECG_CONTROL_POINT)
+                    characteristic.value = byteArrayOf(1, 1)
+                    gatt.writeCharacteristic(characteristic)
                 }
             }
         }
@@ -186,7 +184,7 @@ class BluetoothLeService : Service() {
                 }
 
                 ECG_MEASUREMENT -> {
-                    DlogUtil.d("ddd", "broadcastUpdate ECG_MEASUREMENT ${it.value.toList()}")
+                    DlogUtil.d("ddd", "broadcastUpdate ECG_MEASUREMENT")
                     intent.putExtra(EXTRA_ECG, it.value)
                 }
                 else -> {}
