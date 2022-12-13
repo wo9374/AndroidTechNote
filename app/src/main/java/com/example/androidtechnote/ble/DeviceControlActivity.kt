@@ -13,13 +13,26 @@ import android.graphics.Color
 import android.os.Bundle
 import android.os.IBinder
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.androidtechnote.DlogUtil
 import com.example.androidtechnote.R
+import com.example.androidtechnote.camera.camerakit_library.CameraXActivity
+import com.example.androidtechnote.coordinator.CoordinatorActivity
+import com.example.androidtechnote.coordinator.bottomsheet.BottomSheetActivity
 import com.example.androidtechnote.databinding.ActivityDeviceControlBinding
+import com.example.androidtechnote.ktor.KtorActivity
+import com.example.androidtechnote.myworkmanager.WorkManagerActivity
+import com.example.androidtechnote.navigation.NavigationActivity
+import com.example.androidtechnote.recycler.custom_focus.CustomFocusActivity
+import com.example.androidtechnote.recycler.epoxy.EpoxyActivity
+import com.example.androidtechnote.recycler.paging3.PagingActivity
+import com.example.androidtechnote.room.view.RoomDbActivity
+import com.example.androidtechnote.telephonymanager.TelephonyManagerActivity
+import com.example.androidtechnote.viewpager2.ViewPager2Activity
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -37,6 +50,7 @@ class DeviceControlActivity : AppCompatActivity() {
 
     var writeWatchChar : BluetoothGattCharacteristic? = null
     var ecgMeasurementChar : BluetoothGattCharacteristic? = null
+    //var bloodPressChar : BluetoothGattCharacteristic? = null
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceDisconnected(p0: ComponentName?) {
@@ -55,20 +69,12 @@ class DeviceControlActivity : AppCompatActivity() {
 
         deviceAddress = intent.getStringExtra("address") ?: ""
 
+        binding.callBack = callBack
+
         val gattServiceIntent = Intent(this, BluetoothLeService::class.java)
         bindService(gattServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
 
-        initialECGLayout()
-
-        binding.testBtn.setOnClickListener {
-            writeWatchChar?.let { writeWatch ->
-                writeWatch.apply {
-                    value = BluetoothLeService.FUNCTION_1
-                    writeType = BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE
-                    bluetoothLeService?.bluetoothGatt?.writeCharacteristic(this)
-                }
-            }
-        }
+        initialECGFunction()
     }
 
     override fun onResume() {
@@ -97,7 +103,7 @@ class DeviceControlActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action) {
                 BluetoothLeService.ACTION_GATT_CONNECTED -> {
-                    DlogUtil.d("ddd", "BluetoothLeService.ACTION_GATT_CONNECTED")
+                    DlogUtil.d("ddd", "gattUpdateReceiver BluetoothLeService.ACTION_GATT_CONNECTED")
                     connected = true
                     bluetoothLeService?.discoverService()
                 }
@@ -126,7 +132,7 @@ class DeviceControlActivity : AppCompatActivity() {
                         if (it == "0") {
                             //binding.heartRate.setText("Enter The Heart Rate Mode")
                         }else{
-                            binding.heartRate.setText(it)
+                            binding.heartRate.setText("$it bpm")
                         }
                     }
 
@@ -145,82 +151,8 @@ class DeviceControlActivity : AppCompatActivity() {
         }
     }
 
-    private fun selectCharacteristicData(gattServices: List<BluetoothGattService>?) {
-        if (gattServices == null) return
-
-        gattServices.forEach { gattService ->
-            when (gattService.uuid) {
-                BluetoothLeService.BATTERY_SERVICE -> {
-                    DlogUtil.d("ddd", "selectCharacteristicData BATTERY_SERVICE")
-                    val batteryChar = gattService.getCharacteristic(BluetoothLeService.BATTERY_LEVEL)
-                    bluetoothLeService?.bluetoothGatt?.setCharacteristicNotification(batteryChar, true)
-
-                    val descriptor = batteryChar.getDescriptor(BluetoothLeService.CLIENT_CHARACTERISTIC_CONFIG_UUID).apply {
-                        value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
-                    }
-                    bluetoothLeService?.bluetoothGatt?.writeDescriptor(descriptor)
-                }
-
-                BluetoothLeService.HEART_RATE_SERVICE -> {
-                    val heartRateChar = gattService.getCharacteristic(BluetoothLeService.HEART_RATE_MEASUREMENT)
-                    bluetoothLeService?.bluetoothGatt?.setCharacteristicNotification(heartRateChar, true)
-
-                    val descriptor: BluetoothGattDescriptor = heartRateChar.getDescriptor(BluetoothLeService.CLIENT_CHARACTERISTIC_CONFIG_UUID).apply {
-                        value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
-                    }
-
-                    lifecycleScope.launch{
-                        delay(300)
-                        bluetoothLeService?.bluetoothGatt?.writeDescriptor(descriptor)
-                    }
-                }
-
-                BluetoothLeService.WATCH_SERVICE -> {
-                    DlogUtil.d("ddd", "selectCharacteristicData ECG_SERVICE")
-                    writeWatchChar = gattService.getCharacteristic(BluetoothLeService.WATCH_WRITE_CHARACTER)
-                    ecgMeasurementChar = gattService.getCharacteristic(BluetoothLeService.ECG_MEASUREMENT)
-                }
-            }
-        }
-    }
-
-    private fun makeGattUpdateIntentFilter(): IntentFilter {
-        val intentFilter = IntentFilter().apply {
-            addAction(BluetoothLeService.ACTION_GATT_CONNECTED)
-            addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED)
-            addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED)
-            addAction(BluetoothLeService.ACTION_DATA_AVAILABLE)
-        }
-        return intentFilter
-    }
-
-
-
-    private fun initialECGLayout(){
-        binding.ecgBtn.setOnClickListener {
-            writeWatchChar?.let { writeWatch ->
-                writeWatch.apply {
-                    value = BluetoothLeService.ECG_VALUE_DISPLAY_ON
-                    writeType = BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE
-                    bluetoothLeService?.bluetoothGatt?.writeCharacteristic(this)
-                }
-
-                writeWatch.apply {
-                    value = BluetoothLeService.ECG_VALUE_MEASUREMENT_START
-                    bluetoothLeService?.bluetoothGatt?.writeCharacteristic(writeWatchChar)
-                }
-            }
-
-            ecgMeasurementChar?.let { ecgMeasure ->
-                bluetoothLeService?.bluetoothGatt?.setCharacteristicNotification(ecgMeasure, true)
-                val descriptor: BluetoothGattDescriptor = ecgMeasure.getDescriptor(BluetoothLeService.CLIENT_CHARACTERISTIC_CONFIG_UUID).apply {
-                    value = BluetoothGattDescriptor.ENABLE_INDICATION_VALUE
-                }
-
-                bluetoothLeService?.bluetoothGatt?.writeDescriptor(descriptor)
-            }
-        }
-
+    //심전도 관련 Initial
+    private fun initialECGFunction(){
         binding.ecgGraph.apply {
             extraBottomOffset = 5f
             description.isEnabled = false   // 차트 옆 별도로 표시되는 description
@@ -261,6 +193,35 @@ class DeviceControlActivity : AppCompatActivity() {
         }
     }
 
+    private fun selectCharacteristicData(gattServices: List<BluetoothGattService>?) {
+        if (gattServices == null) return
+
+        gattServices.forEach { gattService ->
+            when (gattService.uuid) {
+                BluetoothLeService.BATTERY_SERVICE -> {
+                    DlogUtil.d("ddd", "selectCharacteristicData BATTERY_SERVICE")
+                    val batteryChar = gattService.getCharacteristic(BluetoothLeService.BATTERY_LEVEL)
+                    //setDescriptor(batteryChar, false)
+                }
+
+                BluetoothLeService.HEART_RATE_SERVICE -> {
+                    DlogUtil.d("ddd", "selectCharacteristicData HEART_RATE_SERVICE")
+                    val heartRateChar = gattService.getCharacteristic(BluetoothLeService.HEART_RATE_MEASUREMENT)
+                    lifecycleScope.launch{
+                        delay(300)
+                        //setDescriptor(heartRateChar, false)
+                    }
+                }
+
+                BluetoothLeService.WATCH_SERVICE -> {
+                    DlogUtil.d("ddd", "selectCharacteristicData ECG_SERVICE")
+                    writeWatchChar = gattService.getCharacteristic(BluetoothLeService.WATCH_WRITE_CHARACTER)
+                    ecgMeasurementChar = gattService.getCharacteristic(BluetoothLeService.ECG_MEASUREMENT)
+                }
+            }
+        }
+    }
+
     fun createChartData(data : List<Int>){
         val entries = mutableListOf<Entry>()  //차트 데이터 셋에 담겨질 데이터
 
@@ -284,6 +245,60 @@ class DeviceControlActivity : AppCompatActivity() {
 
             binding.ecgGraph.data = lineData
             binding.ecgGraph.invalidate()
+        }
+    }
+
+    private fun makeGattUpdateIntentFilter(): IntentFilter {
+        val intentFilter = IntentFilter().apply {
+            addAction(BluetoothLeService.ACTION_GATT_CONNECTED)
+            addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED)
+            addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED)
+            addAction(BluetoothLeService.ACTION_DATA_AVAILABLE)
+        }
+        return intentFilter
+    }
+
+    private fun writeWatchCharacteristic(writeValue: ByteArray){
+        writeWatchChar?.let {  writeWatch ->
+            writeWatch.apply {
+                value = writeValue
+                writeType = BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE
+                bluetoothLeService?.bluetoothGatt?.writeCharacteristic(this)
+            }
+        }
+    }
+    private fun setDescriptor(char: BluetoothGattCharacteristic, indicateEnabled: Boolean){
+        bluetoothLeService?.bluetoothGatt?.setCharacteristicNotification(char, true)
+        val descriptor: BluetoothGattDescriptor = char.getDescriptor(BluetoothLeService.CLIENT_CHARACTERISTIC_CONFIG_UUID).apply {
+            value =
+                if (indicateEnabled) BluetoothGattDescriptor.ENABLE_INDICATION_VALUE
+                else BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
+        }
+        bluetoothLeService?.bluetoothGatt?.writeDescriptor(descriptor)
+    }
+
+    interface Callback{ fun onClick(view: View) }
+
+    private val callBack = object : Callback{
+        override fun onClick(view: View) {
+            binding.apply {
+                when(view.id){
+                    ecgBtn.id -> {
+                        writeWatchCharacteristic(BluetoothLeService.ECG_VALUE_DISPLAY_ON)
+                        writeWatchCharacteristic(BluetoothLeService.ECG_VALUE_MEASUREMENT_START)
+
+                        ecgMeasurementChar?.let {
+                            setDescriptor(it, true)
+                        }
+                    }
+                    bloodBtn.id -> {
+                        writeWatchCharacteristic(BluetoothLeService.BLOOD_PRESSURE_VALUE_DISPLAY_MEASUREMENT)
+                        writeWatchChar?.let{
+                            setDescriptor(it, true)
+                        }
+                    }
+                }
+            }
         }
     }
 }

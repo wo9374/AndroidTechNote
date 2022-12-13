@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ap="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ble.DeviceControlActivity">
+
+    <data>
+
+        <variable
+            name="callBack"
+            type="com.example.androidtechnote.ble.DeviceControlActivity.Callback" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/txt1"
+            android:id="@+id/txt_battery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"
-            android:text="배터리 잔량 : "
+            android:text="배터리 : "
+            app:layout_constraintEnd_toStartOf="@+id/battery"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,42 +31,118 @@
             android:id="@+id/battery"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="Loading..."
-            app:layout_constraintBottom_toBottomOf="@id/txt1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/txt1"
-            app:layout_constraintTop_toTopOf="@id/txt1" />
+            android:layout_marginHorizontal="10dp"
+            android:text="Loading"
+            app:layout_constraintBottom_toBottomOf="@id/txt_battery"
+            app:layout_constraintEnd_toStartOf="@+id/txt_heart"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/txt_battery"
+            app:layout_constraintTop_toTopOf="@id/txt_battery" />
 
         <TextView
-            android:id="@+id/txt2"
+            android:id="@+id/txt_heart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
             android:text="심박수 : "
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt1" />
+            app:layout_constraintEnd_toStartOf="@+id/heartRate"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/battery"
+            app:layout_constraintTop_toTopOf="@+id/txt_battery" />
 
         <EditText
             android:id="@+id/heartRate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:text="Loading..."
-            app:layout_constraintBottom_toBottomOf="@id/txt2"
+            android:layout_marginHorizontal="10dp"
+            android:text="Init"
+            app:layout_constraintBottom_toBottomOf="@id/txt_heart"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/txt2"
-            app:layout_constraintTop_toTopOf="@id/txt2" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/txt_heart"
+            app:layout_constraintTop_toTopOf="@id/txt_heart" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_heart">
+
+            <TextView
+                android:id="@+id/txt_blood"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="혈압 : "
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_blood_max"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="최고"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/editTextTextPersonName"
+                app:layout_constraintStart_toEndOf="@id/txt_blood"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txt_blood_min"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/txt_blood_max"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_blood_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="최저"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName2"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/editTextTextPersonName2"
+                android:layout_width="64dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/blood_btn"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@id/txt_blood_min"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/blood_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="측정"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/ecg_graph"
             android:layout_width="400dp"
-            android:layout_height="300dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="250dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/heartRate" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
         <Button
             android:id="@+id/ecg_btn"
@@ -69,16 +153,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ecg_graph" />
-
-        <Button
-            android:id="@+id/test_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="TEST"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
