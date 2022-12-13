@@ -44,7 +44,8 @@
         <activity android:name=".ktor.KtorActivity" />
 
         <activity android:name=".ble.BleScanActivity" />
-        <activity android:name=".ble.DeviceControlActivity" />
+        <activity android:name=".ble.DeviceControlActivity"
+            android:theme="@style/AppTheme"/>
 
         <activity android:name=".viewpager2.EmptyActivity" />
         <activity android:name=".viewpager2.ViewPager2Activity" />
