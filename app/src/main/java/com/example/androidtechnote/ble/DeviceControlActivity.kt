@@ -20,19 +20,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.androidtechnote.DlogUtil
 import com.example.androidtechnote.R
-import com.example.androidtechnote.camera.camerakit_library.CameraXActivity
-import com.example.androidtechnote.coordinator.CoordinatorActivity
-import com.example.androidtechnote.coordinator.bottomsheet.BottomSheetActivity
 import com.example.androidtechnote.databinding.ActivityDeviceControlBinding
-import com.example.androidtechnote.ktor.KtorActivity
-import com.example.androidtechnote.myworkmanager.WorkManagerActivity
-import com.example.androidtechnote.navigation.NavigationActivity
-import com.example.androidtechnote.recycler.custom_focus.CustomFocusActivity
-import com.example.androidtechnote.recycler.epoxy.EpoxyActivity
-import com.example.androidtechnote.recycler.paging3.PagingActivity
-import com.example.androidtechnote.room.view.RoomDbActivity
-import com.example.androidtechnote.telephonymanager.TelephonyManagerActivity
-import com.example.androidtechnote.viewpager2.ViewPager2Activity
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -51,6 +39,14 @@ class DeviceControlActivity : AppCompatActivity() {
     var writeWatchChar : BluetoothGattCharacteristic? = null
     var ecgMeasurementChar : BluetoothGattCharacteristic? = null
     //var bloodPressChar : BluetoothGattCharacteristic? = null
+
+    var preEcgDataList = arrayListOf<Int>()
+
+    var firstEcgData = arrayListOf<Int>()
+    var secondEcgData = arrayListOf<Int>()
+
+
+    var arrayDeque = ArrayDeque<ArrayList<Int>>(3)
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceDisconnected(p0: ComponentName?) {
@@ -136,16 +132,24 @@ class DeviceControlActivity : AppCompatActivity() {
                         }
                     }
 
-                    val logData = intent.getByteArrayExtra(BluetoothLeService.EXTRA_ECG)?.map {
-                        String.format("0x%02x ", it).replace("0x","")
-                    }?.let {
-                        //DlogUtil.d("ddd", it)
-                    }
+                    //ecg 그래프
+                    intent.getIntegerArrayListExtra(BluetoothLeService.EXTRA_ECG)?.let { intentData ->
+                        /*preEcgDataList.addAll(it)
+                        createChartData(preEcgDataList)
+                        preEcgDataList = it*/
+                        if (arrayDeque.size < 3){
+                            arrayDeque.addLast(intentData)
+                        }else{
+                            arrayDeque.removeFirst()
+                            arrayDeque.addLast(intentData)
+                        }
 
-                    val dataList = intent.getByteArrayExtra(BluetoothLeService.EXTRA_ECG)?.map {
-                        it.toInt()
-                    } ?: arrayListOf()
-                    createChartData(dataList)
+                        val threeData = arrayListOf<Int>()
+                        arrayDeque.forEach {
+                            threeData.addAll(it)
+                        }
+                        createChartData(threeData)
+                    }
                 }
             }
         }
@@ -182,8 +186,8 @@ class DeviceControlActivity : AppCompatActivity() {
                 setDrawLabels(false)
 
                 //axisLineWidth = 2f
-                axisMinimum = (-260).toFloat()
-                axisMaximum = 260.toFloat()
+                axisMinimum = (-2000).toFloat()
+                axisMaximum = 2000.toFloat()
             }
 
             // Y축 오른쪽 설정
@@ -241,6 +245,7 @@ class DeviceControlActivity : AppCompatActivity() {
             lineData.apply {
                 //setValueTextColor(color: Int)
                 //setValueTextSize(size: Float)
+                setDrawValues(false)
             }
 
             binding.ecgGraph.data = lineData
@@ -288,12 +293,6 @@ class DeviceControlActivity : AppCompatActivity() {
                         writeWatchCharacteristic(BluetoothLeService.ECG_VALUE_MEASUREMENT_START)
 
                         ecgMeasurementChar?.let {
-                            setDescriptor(it, true)
-                        }
-                    }
-                    bloodBtn.id -> {
-                        writeWatchCharacteristic(BluetoothLeService.BLOOD_PRESSURE_VALUE_DISPLAY_MEASUREMENT)
-                        writeWatchChar?.let{
                             setDescriptor(it, true)
                         }
                     }
