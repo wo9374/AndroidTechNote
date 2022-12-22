@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ble.DeviceControlActivity">
+    tools:context=".ble_f400.DeviceControlActivity">
 
     <data>
 
         <variable
             name="callBack"
-            type="com.example.androidtechnote.ble.DeviceControlActivity.Callback" />
+            type="com.example.androidtechnote.ble_f400.DeviceControlActivity.Callback" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,9 +34,9 @@
             android:layout_marginHorizontal="10dp"
             android:text="Loading"
             app:layout_constraintBottom_toBottomOf="@id/txt_battery"
-            app:layout_constraintEnd_toStartOf="@+id/txt_heart"
+            app:layout_constraintEnd_toStartOf="@id/txt_heart"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/txt_battery"
+            app:layout_constraintStart_toEndOf="@id/txt_battery"
             app:layout_constraintTop_toTopOf="@id/txt_battery" />
 
         <TextView
@@ -44,10 +44,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="심박수 : "
-            app:layout_constraintEnd_toStartOf="@+id/heartRate"
+            app:layout_constraintEnd_toStartOf="@id/heartRate"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/battery"
-            app:layout_constraintTop_toTopOf="@+id/txt_battery" />
+            app:layout_constraintTop_toTopOf="@id/txt_battery" />
 
         <EditText
             android:id="@+id/heartRate"
@@ -58,17 +58,36 @@
             app:layout_constraintBottom_toBottomOf="@id/txt_heart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/txt_heart"
+            app:layout_constraintStart_toEndOf="@id/txt_heart"
             app:layout_constraintTop_toTopOf="@id/txt_heart" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/ecg_graph"
+            android:layout_width="400dp"
+            android:layout_height="300dp"
+            android:layout_marginTop="13dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txt_heart" />
+
+        <Button
+            android:id="@+id/ecg_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:onClick="@{callBack::onClick}"
+            android:text="심전도 측정"
+            app:layout_constraintBottom_toBottomOf="@id/ecg_graph"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_heart">
+            app:layout_constraintTop_toBottomOf="@id/ecg_graph">
 
             <TextView
                 android:id="@+id/txt_blood"
@@ -87,20 +106,20 @@
                 android:layout_marginStart="10dp"
                 android:text="최고"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/editTextTextPersonName"
+                app:layout_constraintEnd_toStartOf="@id/maxBpm"
                 app:layout_constraintStart_toEndOf="@id/txt_blood"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
+                android:id="@+id/maxBpm"
                 android:layout_width="64dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="numberDecimal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/txt_blood_min"
+                app:layout_constraintEnd_toStartOf="@id/txt_blood_min"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/txt_blood_max"
+                app:layout_constraintStart_toEndOf="@id/txt_blood_max"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -109,13 +128,13 @@
                 android:layout_height="wrap_content"
                 android:text="최저"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/editTextTextPersonName2"
+                app:layout_constraintEnd_toStartOf="@id/minBpm"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
+                app:layout_constraintStart_toEndOf="@id/maxBpm"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/editTextTextPersonName2"
+                android:id="@+id/minBpm"
                 android:layout_width="64dp"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -130,29 +149,60 @@
                 android:id="@+id/blood_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="측정"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:onClick="@{callBack::onClick}"
+                android:text="Test"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@id/minBpm"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.github.mikephil.charting.charts.LineChart
-            android:id="@+id/ecg_graph"
-            android:layout_width="400dp"
-            android:layout_height="250dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
-
-        <Button
-            android:id="@+id/ecg_btn"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="심전도 측정"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ecg_graph" />
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                android:id="@+id/theme_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{callBack::onClick}"
+                android:text="테마\n1" />
+
+            <Button
+                android:id="@+id/theme_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{callBack::onClick}"
+                android:text="테마\n2" />
+
+            <Button
+                android:id="@+id/theme_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{callBack::onClick}"
+                android:text="테마\n3" />
+
+            <Button
+                android:id="@+id/theme_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{callBack::onClick}"
+                android:text="테마\n4" />
+
+            <Button
+                android:id="@+id/theme_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{callBack::onClick}"
+                android:text="테마\n5" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,4 +1,4 @@
-package com.example.androidtechnote.ble
+package com.example.androidtechnote.ble_f400
 
 import android.Manifest
 import android.app.Activity
@@ -6,7 +6,6 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.bluetooth.le.ScanCallback
-import android.bluetooth.le.ScanFilter
 import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
 import android.content.Context
@@ -14,7 +13,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Rect
 import android.os.Bundle
-import android.os.ParcelUuid
 import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem

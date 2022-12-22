@@ -1,4 +1,4 @@
-package com.example.androidtechnote.ble
+package com.example.androidtechnote.ble_f400
 
 import android.bluetooth.BluetoothDevice
 import android.content.Context
@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.ItemBleListBinding
-import com.example.androidtechnote.room.model.Test
 
 class BleListAdapter(val itemClick: (Int) -> Unit) : ListAdapter<BluetoothDevice, BleListViewHolder>(DiffUtil()){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BleListViewHolder {

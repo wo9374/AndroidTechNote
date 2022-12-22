@@ -1,4 +1,4 @@
-package com.example.androidtechnote.ble
+package com.example.androidtechnote.ble_f400
 
 import android.app.Service
 import android.bluetooth.BluetoothAdapter
@@ -58,7 +58,7 @@ class BluetoothLeService : Service() {
         val ECG_DISPLAY_VALUE_2: ByteArray = BigInteger("03090900010302F38B", 16).toByteArray()
         val ECG_VALUE_MEASUREMENT_START: ByteArray = BigInteger("030B08000101DC8A", 16).toByteArray() //ECG 측정 시작
 
-        //val BLOOD_PRESSURE_VALUE_DISPLAY_MEASUREMENT : ByteArray = BigInteger("03030800735A540D", 16).toByteArray() //혈압 워치화면 display 및 혈압 측정
+        val BLOOD_PRESSURE_VALUE_DISPLAY_MEASUREMENT : ByteArray = BigInteger("03030800735A540D", 16).toByteArray() //혈압 워치화면 display 및 혈압 측정
 
         //테마 value
         val WATCH_THEME_1 : ByteArray = BigInteger("01190700001DD6", 16).toByteArray()

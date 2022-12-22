@@ -1,4 +1,4 @@
-package com.example.androidtechnote.ble
+package com.example.androidtechnote.ble_f400
 
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattDescriptor
@@ -38,13 +38,6 @@ class DeviceControlActivity : AppCompatActivity() {
 
     var writeWatchChar : BluetoothGattCharacteristic? = null
     var ecgMeasurementChar : BluetoothGattCharacteristic? = null
-    //var bloodPressChar : BluetoothGattCharacteristic? = null
-
-    var preEcgDataList = arrayListOf<Int>()
-
-    var firstEcgData = arrayListOf<Int>()
-    var secondEcgData = arrayListOf<Int>()
-
 
     var arrayDeque = ArrayDeque<ArrayList<Int>>(3)
 
@@ -295,6 +288,16 @@ class DeviceControlActivity : AppCompatActivity() {
                         ecgMeasurementChar?.let {
                             setDescriptor(it, true)
                         }
+                    }
+
+                    theme1.id -> writeWatchCharacteristic(BluetoothLeService.WATCH_THEME_1)
+                    theme2.id -> writeWatchCharacteristic(BluetoothLeService.WATCH_THEME_2)
+                    theme3.id -> writeWatchCharacteristic(BluetoothLeService.WATCH_THEME_3)
+                    theme4.id -> writeWatchCharacteristic(BluetoothLeService.WATCH_THEME_4)
+                    theme5.id -> writeWatchCharacteristic(BluetoothLeService.WATCH_THEME_5)
+
+                    bloodBtn.id ->{
+                        writeWatchCharacteristic(BluetoothLeService.BLOOD_PRESSURE_VALUE_DISPLAY_MEASUREMENT)
                     }
                 }
             }
