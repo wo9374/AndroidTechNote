@@ -1,4 +1,4 @@
-package com.example.androidtechnote.ble_f400
+package com.example.androidtechnote.ble
 
 import android.Manifest
 import android.app.Activity

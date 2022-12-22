@@ -1,4 +1,4 @@
-package com.example.androidtechnote.ble_f400
+package com.example.androidtechnote.ble
 
 import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.BluetoothGattDescriptor

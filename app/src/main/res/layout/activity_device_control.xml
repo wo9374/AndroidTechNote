@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ble_f400.DeviceControlActivity">
+    tools:context=".ble.DeviceControlActivity">
 
     <data>
 
         <variable
             name="callBack"
-            type="com.example.androidtechnote.ble_f400.DeviceControlActivity.Callback" />
+            type="com.example.androidtechnote.ble.DeviceControlActivity.Callback" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

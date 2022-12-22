@@ -7,7 +7,7 @@ import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.example.androidtechnote.ble_f400.BleScanActivity
+import com.example.androidtechnote.ble.BleScanActivity
 import com.example.androidtechnote.camera.camerakit_library.CameraXActivity
 import com.example.androidtechnote.coordinator.bottomsheet.BottomSheetActivity
 import com.example.androidtechnote.coordinator.CoordinatorActivity
