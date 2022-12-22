@@ -17,7 +17,7 @@ import java.math.BigInteger
 import java.util.*
 
 
-class BluetoothLeService : Service() {
+class BLEService_F400 : Service() {
 
     companion object{
         const val STATE_DISCONNECTED = 0
@@ -89,7 +89,7 @@ class BluetoothLeService : Service() {
     }
 
     inner class LocalBinder: Binder() {
-        var service = this@BluetoothLeService
+        var service = this@BLEService_F400
     }
 
     val binder = LocalBinder()

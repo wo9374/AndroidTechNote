@@ -220,7 +220,7 @@ class BleScanActivity : AppCompatActivity() {
 
     private fun selectDevice(position: Int){
         val device = arrayDevices[position]
-        val intent = Intent(this, DeviceControlActivity::class.java)
+        val intent = Intent(this, F400_Activity::class.java)
         intent.putExtra("address", device.address)
 
         if (mScanning) scanLeDevice(false)

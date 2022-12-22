@@ -32,7 +32,7 @@
         android:usesCleartextTraffic="true">
 
         <service
-            android:name=".ble.BluetoothLeService"
+            android:name=".ble.BLEService_F400"
             android:enabled="true"/>
 
         <activity
@@ -44,7 +44,7 @@
         <activity android:name=".ktor.KtorActivity" />
 
         <activity android:name=".ble.BleScanActivity" />
-        <activity android:name=".ble.DeviceControlActivity"
+        <activity android:name=".ble.`KH-CED7_Activity`"
             android:theme="@style/AppTheme"/>
 
         <activity android:name=".viewpager2.EmptyActivity" />

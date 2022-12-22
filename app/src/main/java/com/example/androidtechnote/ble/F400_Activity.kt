@@ -29,12 +29,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
-class DeviceControlActivity : AppCompatActivity() {
+class F400_Activity : AppCompatActivity() {
 
     lateinit var binding: ActivityDeviceControlBinding
 
     private var deviceAddress: String = ""
-    private var bluetoothLeService: BluetoothLeService? = null
+    private var BLEServiceF400: BLEService_F400? = null
 
     var writeWatchChar : BluetoothGattCharacteristic? = null
     var ecgMeasurementChar : BluetoothGattCharacteristic? = null
@@ -43,12 +43,12 @@ class DeviceControlActivity : AppCompatActivity() {
 
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceDisconnected(p0: ComponentName?) {
-            bluetoothLeService = null
+            BLEServiceF400 = null
         }
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
-            bluetoothLeService = (service as BluetoothLeService.LocalBinder).service
-            bluetoothLeService?.connect(deviceAddress)
+            BLEServiceF400 = (service as BLEService_F400.LocalBinder).service
+            BLEServiceF400?.connect(deviceAddress)
         }
     }
 
@@ -60,7 +60,7 @@ class DeviceControlActivity : AppCompatActivity() {
 
         binding.callBack = callBack
 
-        val gattServiceIntent = Intent(this, BluetoothLeService::class.java)
+        val gattServiceIntent = Intent(this, BLEService_F400::class.java)
         bindService(gattServiceIntent, serviceConnection, Context.BIND_AUTO_CREATE)
 
         initialECGFunction()
@@ -70,8 +70,8 @@ class DeviceControlActivity : AppCompatActivity() {
         super.onResume()
         registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter())
 
-        if (bluetoothLeService != null) {
-            val result: Boolean = bluetoothLeService!!.connect(deviceAddress)
+        if (BLEServiceF400 != null) {
+            val result: Boolean = BLEServiceF400!!.connect(deviceAddress)
             Log.d(this.javaClass.name, "Connect request result=$result")
         }
     }
@@ -84,39 +84,39 @@ class DeviceControlActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         unbindService(serviceConnection)
-        bluetoothLeService = null
+        BLEServiceF400 = null
     }
 
     var connected = false
     private val gattUpdateReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action) {
-                BluetoothLeService.ACTION_GATT_CONNECTED -> {
+                BLEService_F400.ACTION_GATT_CONNECTED -> {
                     DlogUtil.d("ddd", "gattUpdateReceiver BluetoothLeService.ACTION_GATT_CONNECTED")
                     connected = true
-                    bluetoothLeService?.discoverService()
+                    BLEServiceF400?.discoverService()
                 }
-                BluetoothLeService.ACTION_GATT_DISCONNECTED -> {
+                BLEService_F400.ACTION_GATT_DISCONNECTED -> {
                     connected = false
-                    bluetoothLeService?.disconnect()
-                    Toast.makeText(this@DeviceControlActivity, "BLE: 연결 해제", Toast.LENGTH_SHORT).show()
+                    BLEServiceF400?.disconnect()
+                    Toast.makeText(this@F400_Activity, "BLE: 연결 해제", Toast.LENGTH_SHORT).show()
                 }
-                BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED -> {
+                BLEService_F400.ACTION_GATT_SERVICES_DISCOVERED -> {
                     DlogUtil.d("ddd", "gattUpdateReceiver ACTION_GATT_SERVICES_DISCOVERED")
-                    bluetoothLeService?.let {
+                    BLEServiceF400?.let {
                         selectCharacteristicData(it.bluetoothGatt?.services)
                     }
                 }
-                BluetoothLeService.ACTION_DATA_AVAILABLE -> {
+                BLEService_F400.ACTION_DATA_AVAILABLE -> {
                     //DlogUtil.d("ddd", "gattUpdateReceiver ACTION_DATA_AVAILABLE")
 
-                    val batteryPercent = intent.getIntExtra(BluetoothLeService.EXTRA_BATTERY, -1)
+                    val batteryPercent = intent.getIntExtra(BLEService_F400.EXTRA_BATTERY, -1)
                     if (batteryPercent != -1){
                         DlogUtil.d("ddd", batteryPercent)
                         binding.battery.setText("$batteryPercent%")
                     }
 
-                    val heartRate = intent.getStringExtra(BluetoothLeService.EXTRA_HEART_RATE)
+                    val heartRate = intent.getStringExtra(BLEService_F400.EXTRA_HEART_RATE)
                     heartRate?.let {
                         if (it == "0") {
                             //binding.heartRate.setText("Enter The Heart Rate Mode")
@@ -126,7 +126,7 @@ class DeviceControlActivity : AppCompatActivity() {
                     }
 
                     //ecg 그래프
-                    intent.getIntegerArrayListExtra(BluetoothLeService.EXTRA_ECG)?.let { intentData ->
+                    intent.getIntegerArrayListExtra(BLEService_F400.EXTRA_ECG)?.let { intentData ->
                         /*preEcgDataList.addAll(it)
                         createChartData(preEcgDataList)
                         preEcgDataList = it*/
@@ -195,25 +195,25 @@ class DeviceControlActivity : AppCompatActivity() {
 
         gattServices.forEach { gattService ->
             when (gattService.uuid) {
-                BluetoothLeService.BATTERY_SERVICE -> {
+                BLEService_F400.BATTERY_SERVICE -> {
                     DlogUtil.d("ddd", "selectCharacteristicData BATTERY_SERVICE")
-                    val batteryChar = gattService.getCharacteristic(BluetoothLeService.BATTERY_LEVEL)
+                    val batteryChar = gattService.getCharacteristic(BLEService_F400.BATTERY_LEVEL)
                     //setDescriptor(batteryChar, false)
                 }
 
-                BluetoothLeService.HEART_RATE_SERVICE -> {
+                BLEService_F400.HEART_RATE_SERVICE -> {
                     DlogUtil.d("ddd", "selectCharacteristicData HEART_RATE_SERVICE")
-                    val heartRateChar = gattService.getCharacteristic(BluetoothLeService.HEART_RATE_MEASUREMENT)
+                    val heartRateChar = gattService.getCharacteristic(BLEService_F400.HEART_RATE_MEASUREMENT)
                     lifecycleScope.launch{
                         delay(300)
                         //setDescriptor(heartRateChar, false)
                     }
                 }
 
-                BluetoothLeService.WATCH_SERVICE -> {
+                BLEService_F400.WATCH_SERVICE -> {
                     DlogUtil.d("ddd", "selectCharacteristicData ECG_SERVICE")
-                    writeWatchChar = gattService.getCharacteristic(BluetoothLeService.WATCH_WRITE_CHARACTER)
-                    ecgMeasurementChar = gattService.getCharacteristic(BluetoothLeService.ECG_MEASUREMENT)
+                    writeWatchChar = gattService.getCharacteristic(BLEService_F400.WATCH_WRITE_CHARACTER)
+                    ecgMeasurementChar = gattService.getCharacteristic(BLEService_F400.ECG_MEASUREMENT)
                 }
             }
         }
@@ -248,10 +248,10 @@ class DeviceControlActivity : AppCompatActivity() {
 
     private fun makeGattUpdateIntentFilter(): IntentFilter {
         val intentFilter = IntentFilter().apply {
-            addAction(BluetoothLeService.ACTION_GATT_CONNECTED)
-            addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED)
-            addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED)
-            addAction(BluetoothLeService.ACTION_DATA_AVAILABLE)
+            addAction(BLEService_F400.ACTION_GATT_CONNECTED)
+            addAction(BLEService_F400.ACTION_GATT_DISCONNECTED)
+            addAction(BLEService_F400.ACTION_GATT_SERVICES_DISCOVERED)
+            addAction(BLEService_F400.ACTION_DATA_AVAILABLE)
         }
         return intentFilter
     }
@@ -261,18 +261,18 @@ class DeviceControlActivity : AppCompatActivity() {
             writeWatch.apply {
                 value = writeValue
                 writeType = BluetoothGattCharacteristic.WRITE_TYPE_NO_RESPONSE
-                bluetoothLeService?.bluetoothGatt?.writeCharacteristic(this)
+                BLEServiceF400?.bluetoothGatt?.writeCharacteristic(this)
             }
         }
     }
     private fun setDescriptor(char: BluetoothGattCharacteristic, indicateEnabled: Boolean){
-        bluetoothLeService?.bluetoothGatt?.setCharacteristicNotification(char, true)
-        val descriptor: BluetoothGattDescriptor = char.getDescriptor(BluetoothLeService.CLIENT_CHARACTERISTIC_CONFIG_UUID).apply {
+        BLEServiceF400?.bluetoothGatt?.setCharacteristicNotification(char, true)
+        val descriptor: BluetoothGattDescriptor = char.getDescriptor(BLEService_F400.CLIENT_CHARACTERISTIC_CONFIG_UUID).apply {
             value =
                 if (indicateEnabled) BluetoothGattDescriptor.ENABLE_INDICATION_VALUE
                 else BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
         }
-        bluetoothLeService?.bluetoothGatt?.writeDescriptor(descriptor)
+        BLEServiceF400?.bluetoothGatt?.writeDescriptor(descriptor)
     }
 
     interface Callback{ fun onClick(view: View) }
@@ -282,22 +282,22 @@ class DeviceControlActivity : AppCompatActivity() {
             binding.apply {
                 when(view.id){
                     ecgBtn.id -> {
-                        writeWatchCharacteristic(BluetoothLeService.ECG_VALUE_DISPLAY_ON)
-                        writeWatchCharacteristic(BluetoothLeService.ECG_VALUE_MEASUREMENT_START)
+                        writeWatchCharacteristic(BLEService_F400.ECG_VALUE_DISPLAY_ON)
+                        writeWatchCharacteristic(BLEService_F400.ECG_VALUE_MEASUREMENT_START)
 
                         ecgMeasurementChar?.let {
                             setDescriptor(it, true)
                         }
                     }
 
-                    theme1.id -> writeWatchCharacteristic(BluetoothLeService.WATCH_THEME_1)
-                    theme2.id -> writeWatchCharacteristic(BluetoothLeService.WATCH_THEME_2)
-                    theme3.id -> writeWatchCharacteristic(BluetoothLeService.WATCH_THEME_3)
-                    theme4.id -> writeWatchCharacteristic(BluetoothLeService.WATCH_THEME_4)
-                    theme5.id -> writeWatchCharacteristic(BluetoothLeService.WATCH_THEME_5)
+                    theme1.id -> writeWatchCharacteristic(BLEService_F400.WATCH_THEME_1)
+                    theme2.id -> writeWatchCharacteristic(BLEService_F400.WATCH_THEME_2)
+                    theme3.id -> writeWatchCharacteristic(BLEService_F400.WATCH_THEME_3)
+                    theme4.id -> writeWatchCharacteristic(BLEService_F400.WATCH_THEME_4)
+                    theme5.id -> writeWatchCharacteristic(BLEService_F400.WATCH_THEME_5)
 
                     bloodBtn.id ->{
-                        writeWatchCharacteristic(BluetoothLeService.BLOOD_PRESSURE_VALUE_DISPLAY_MEASUREMENT)
+                        writeWatchCharacteristic(BLEService_F400.BLOOD_PRESSURE_VALUE_DISPLAY_MEASUREMENT)
                     }
                 }
             }
