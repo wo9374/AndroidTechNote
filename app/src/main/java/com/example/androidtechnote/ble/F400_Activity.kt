@@ -20,7 +20,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.androidtechnote.DlogUtil
 import com.example.androidtechnote.R
-import com.example.androidtechnote.databinding.ActivityDeviceControlBinding
+import com.example.androidtechnote.databinding.ActivityF400Binding
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 
 class F400_Activity : AppCompatActivity() {
 
-    lateinit var binding: ActivityDeviceControlBinding
+    lateinit var binding: ActivityF400Binding
 
     private var deviceAddress: String = ""
     private var BLEServiceF400: BLEService_F400? = null
@@ -54,7 +54,7 @@ class F400_Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_device_control)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_f400)
 
         deviceAddress = intent.getStringExtra("address") ?: ""
 
