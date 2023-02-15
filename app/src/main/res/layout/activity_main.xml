@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{callBack::onClick}"
             android:text="coordinator"
-            app:layout_constraintStart_toEndOf="@+id/navi_btn"
+            app:layout_constraintStart_toEndOf="@id/navi_btn"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{callBack::onClick}"
             android:text="work"
-            app:layout_constraintStart_toEndOf="@+id/coordinator_btn"
+            app:layout_constraintStart_toEndOf="@id/coordinator_btn"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
@@ -49,7 +49,7 @@
             android:onClick="@{callBack::onClick}"
             android:text="paging"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/navi_btn" />
+            app:layout_constraintTop_toBottomOf="@id/navi_btn" />
 
         <Button
             android:id="@+id/camera_btn"
@@ -57,8 +57,8 @@
             android:layout_height="wrap_content"
             android:onClick="@{callBack::onClick}"
             android:text="camera"
-            app:layout_constraintStart_toEndOf="@+id/paging_btn"
-            app:layout_constraintTop_toTopOf="@+id/paging_btn" />
+            app:layout_constraintStart_toEndOf="@id/paging_btn"
+            app:layout_constraintTop_toTopOf="@id/paging_btn" />
 
         <Button
             android:id="@+id/room_btn"
@@ -66,8 +66,8 @@
             android:layout_height="wrap_content"
             android:onClick="@{callBack::onClick}"
             android:text="Room"
-            app:layout_constraintStart_toEndOf="@+id/camera_btn"
-            app:layout_constraintTop_toBottomOf="@+id/navi_btn" />
+            app:layout_constraintStart_toEndOf="@id/camera_btn"
+            app:layout_constraintTop_toBottomOf="@id/navi_btn" />
 
         <Button
             android:id="@+id/epoxy_btn"
@@ -75,8 +75,8 @@
             android:layout_height="wrap_content"
             android:onClick="@{callBack::onClick}"
             android:text="EPOXY"
-            app:layout_constraintStart_toEndOf="@+id/room_btn"
-            app:layout_constraintTop_toBottomOf="@+id/navi_btn" />
+            app:layout_constraintStart_toEndOf="@id/room_btn"
+            app:layout_constraintTop_toBottomOf="@id/navi_btn" />
 
         <Button
             android:id="@+id/ktor_btn"
@@ -85,7 +85,7 @@
             android:onClick="@{callBack::onClick}"
             android:text="Ktor"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/paging_btn" />
+            app:layout_constraintTop_toBottomOf="@id/paging_btn" />
 
         <Button
             android:id="@+id/viewpager_btn"
@@ -112,16 +112,16 @@
             android:onClick="@{callBack::onClick}"
             android:text="Telephony"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ktor_btn" />
+            app:layout_constraintTop_toBottomOf="@id/ktor_btn" />
 
         <Button
-            android:id="@+id/focus_btn"
+            android:id="@+id/focus_recycler_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="@{callBack::onClick}"
             android:text="FocusRecycler"
-            app:layout_constraintStart_toEndOf="@+id/telephony_btn"
-            app:layout_constraintTop_toBottomOf="@+id/ktor_btn" />
+            app:layout_constraintStart_toEndOf="@id/telephony_btn"
+            app:layout_constraintTop_toBottomOf="@id/ktor_btn" />
 
         <Button
             android:id="@+id/ble_btn"
@@ -129,8 +129,17 @@
             android:layout_height="wrap_content"
             android:onClick="@{callBack::onClick}"
             android:text="BLE"
-            app:layout_constraintStart_toEndOf="@+id/focus_btn"
-            app:layout_constraintTop_toBottomOf="@+id/ktor_btn" />
+            app:layout_constraintStart_toEndOf="@id/focus_recycler_btn"
+            app:layout_constraintTop_toBottomOf="@id/ktor_btn" />
+
+        <Button
+            android:id="@+id/focus_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{callBack::onClick}"
+            android:text="Focus"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/telephony_btn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

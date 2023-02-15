@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         override fun onClick(view : View){
             var intent = Intent()
 
+
             binding.apply {
                 when(view.id){
                     naviBtn.id -> intent =Intent(applicationContext, NavigationActivity::class.java)
@@ -59,8 +60,9 @@ class MainActivity : AppCompatActivity() {
                     viewpagerBtn.id -> intent = Intent(applicationContext, ViewPager2Activity::class.java )
                     bottomSheetBtn.id -> intent = Intent(applicationContext, BottomSheetActivity::class.java)
                     telephonyBtn.id -> intent = Intent(applicationContext, TelephonyManagerActivity::class.java)
-                    focusBtn.id -> {intent = Intent(applicationContext, CustomFocusActivity::class.java)}
+                    focusRecyclerBtn.id -> {intent = Intent(applicationContext, CustomFocusActivity::class.java)}
                     bleBtn.id -> {intent = Intent(applicationContext, BleScanActivity::class.java)}
+                    focusBtn.id -> {intent = Intent(applicationContext, FocusActivity::class.java)}
                 }
             }
             startActivity(intent)

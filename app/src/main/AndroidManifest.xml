@@ -43,8 +43,11 @@
         <activity android:name=".eventobserver.EventObserverActivity" />
         <activity android:name=".ktor.KtorActivity" />
 
+        <activity android:name=".FocusActivity"
+            android:theme="@style/NoActionBar"/>
+
         <activity android:name=".ble.BleScanActivity" />
-        <activity android:name=".ble.`KH-CED7_Activity`"
+        <activity android:name=".ble.KH_CED7_Activity"
             android:theme="@style/AppTheme"/>
 
         <activity android:name=".viewpager2.EmptyActivity" />
