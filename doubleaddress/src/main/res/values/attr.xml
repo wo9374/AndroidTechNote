@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DoubleAddressSpinner">
+        <attr name="spinner1_width" format="dimension"/>
+        <attr name="spinner2_width" format="dimension"/>
+        <attr name="spinner_height" format="dimension"/>
+
+        <attr name="icon_width" format="dimension"/>
+        <attr name="icon_height" format="dimension"/>
+    </declare-styleable>
+</resources>

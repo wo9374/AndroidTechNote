@@ -3,6 +3,7 @@ package com.example.androidtechnote
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,14 @@ class MainActivity : AppCompatActivity() {
         binding.callBack = callBack
 
         //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+        binding.addressSpinner.apply {
+            searchBtn.setOnClickListener {
+                getSelectedItemPair().apply {
+                    Log.d("MainActivity", "1: $first 2: $second")
+                }
+            }
+        }
     }
 
     interface Callback{
