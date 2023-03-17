@@ -24,6 +24,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "TMDB_API_KEYS", properties['tmdb.api.keys']
+        buildConfigField "String", "GOOGLE_API_KEY", properties['ljb97.dev.google.api.key']
     }
 
     buildTypes {

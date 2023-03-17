@@ -6,21 +6,21 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera.any" />
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!--위치 (ex: 블루투스)-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 위치 (ex: 블루투스) -->
     <!-- 앱이 Android 9(API 레벨 28) 이하를 대상으로 하는 경우 ACCESS_FINE_LOCATION 권한 대신 ACCESS_COARSE_LOCATION 권한을 선언할 수 있습니다. -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -30,49 +30,45 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidTechNote"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".calendar.CalendarActivity"
+            android:exported="false" />
 
         <service
             android:name=".ble.BLEService_F400"
-            android:enabled="true"/>
+            android:enabled="true" />
 
         <activity
             android:name=".camera.camerakit_library.CameraXActivity"
             android:theme="@style/Theme.FullScreen" />
-
         <activity android:name=".telephonymanager.TelephonyManagerActivity" />
         <activity android:name=".eventobserver.EventObserverActivity" />
         <activity android:name=".ktor.KtorActivity" />
-
-        <activity android:name=".FocusActivity"
-            android:theme="@style/NoActionBar"/>
-
+        <activity
+            android:name=".FocusActivity"
+            android:theme="@style/NoActionBar" />
         <activity android:name=".ble.BleScanActivity" />
-        <activity android:name=".ble.KH_CED7_Activity"
-            android:theme="@style/AppTheme"/>
-
+        <activity
+            android:name=".ble.KH_CED7_Activity"
+            android:theme="@style/AppTheme" />
         <activity android:name=".viewpager2.EmptyActivity" />
         <activity android:name=".viewpager2.ViewPager2Activity" />
-
         <activity android:name=".room.view.RoomDbActivity" />
         <activity android:name=".room.view.AddActivity" />
-
         <activity android:name=".coordinator.CoordinatorActivity" />
         <activity android:name=".coordinator.bottomsheet.BottomSheetActivity" />
-
         <activity android:name=".recycler.paging3.PagingActivity" />
         <activity android:name=".recycler.paging3.contentresolver.PgCrActivity" />
         <activity android:name=".recycler.paging3.retrofit.PgRetrofitActivity" />
         <activity android:name=".recycler.paging3.basicforloop.PgBasicActivity" />
         <activity android:name=".recycler.epoxy.EpoxyActivity" />
-        <activity android:name=".recycler.custom_focus.CustomFocusActivity"
-            android:theme="@style/Theme.FullScreen"/>
-
+        <activity
+            android:name=".recycler.custom_focus.CustomFocusActivity"
+            android:theme="@style/Theme.FullScreen" />
         <activity android:name=".myworkmanager.WorkManagerActivity" />
         <activity android:name=".myworkmanager.videodown.FileDownActivity" />
         <activity android:name=".myworkmanager.basicwork.BasicWorkManagerActivity" />
-
         <activity android:name=".navigation.NavigationActivity" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -83,4 +79,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

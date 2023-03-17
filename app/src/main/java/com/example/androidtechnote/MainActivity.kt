@@ -9,6 +9,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.androidtechnote.ble.BleScanActivity
+import com.example.androidtechnote.calendar.CalendarActivity
 import com.example.androidtechnote.camera.camerakit_library.CameraXActivity
 import com.example.androidtechnote.coordinator.bottomsheet.BottomSheetActivity
 import com.example.androidtechnote.coordinator.CoordinatorActivity
@@ -72,6 +73,7 @@ class MainActivity : AppCompatActivity() {
                     focusRecyclerBtn.id -> {intent = Intent(applicationContext, CustomFocusActivity::class.java)}
                     bleBtn.id -> {intent = Intent(applicationContext, BleScanActivity::class.java)}
                     focusBtn.id -> {intent = Intent(applicationContext, FocusActivity::class.java)}
+                    calendarBtn.id -> {intent = Intent(applicationContext, CalendarActivity::class.java)}
                 }
             }
             startActivity(intent)
