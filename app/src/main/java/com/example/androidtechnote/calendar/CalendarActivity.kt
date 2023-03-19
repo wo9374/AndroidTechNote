@@ -1,13 +1,21 @@
 package com.example.androidtechnote.calendar
 
+import android.icu.text.SimpleDateFormat
+import android.icu.util.Calendar
+import android.icu.util.ChineseCalendar
+import android.icu.util.GregorianCalendar
+import android.icu.util.TimeZone
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.example.androidtechnote.BuildConfig
 import com.example.androidtechnote.R
 import com.example.androidtechnote.databinding.ActivityCalendarBinding
+import com.usingsky.calendar.KoreanLunarCalendar
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,6 +24,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.util.*
 
 class CalendarActivity : AppCompatActivity() {
     lateinit var binding : ActivityCalendarBinding
@@ -45,15 +54,46 @@ class CalendarActivity : AppCompatActivity() {
 
             if (result.isSuccessful){
                 var str =""
+
+                val calendar = KoreanLunarCalendar.getInstance()
                 result.body()?.items?.forEach {
-                    Log.e("Google Calendar Api", "${it.summary} ${it.startDate}")
                     val temp = it.summary
-                    if (temp == "쉬는 날") temp.replace("쉬는 날", "대채 공휴일")
-                    str += "$temp ${it.startDate}\n"
+                    if (temp == "쉬는 날") temp.replace("쉬는 날", "대체 공휴일")
+
+                    val day = it.startDate.date.split("-").map { trimStr ->
+                        trimStr.toInt()
+                    }
+                    calendar.apply {
+                        setSolarDate(day[0],day[1],day[2])
+                        str += "$temp\n양력:${it.startDate.date} 음력:$lunarYear-$lunarMonth-$lunarDay\n"
+
+                        Log.e("Google Calendar Api", "${it.summary}\t\t 양력:${it.startDate.date} 음력:$lunarYear-$lunarMonth-$lunarDay")
+                    }
                 }
+
+
                 binding.title.text = str
             }
         }
+    }
+
+    fun convertSolarToLunar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            val timeZone = TimeZone.getTimeZone("Asia/Seoul")
+            val solar = Calendar.getInstance(timeZone)
+            val lunar = ChineseCalendar(timeZone)
+            lunar.timeInMillis = solar.timeInMillis
+
+            val year = lunar.get(ChineseCalendar.YEAR)
+            val month = lunar.get(ChineseCalendar.MONTH)
+            val day = lunar.get(ChineseCalendar.DAY_OF_MONTH)
+
+            // 음력 날짜 출력
+            Log.d("Lunar Date", "${year}년 ${month + 1}월 ${day}일")
+        } else {
+
+        }
+
     }
 }
 
