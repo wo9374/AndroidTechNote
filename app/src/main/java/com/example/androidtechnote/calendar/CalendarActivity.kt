@@ -76,25 +76,6 @@ class CalendarActivity : AppCompatActivity() {
             }
         }
     }
-
-    fun convertSolarToLunar() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val timeZone = TimeZone.getTimeZone("Asia/Seoul")
-            val solar = Calendar.getInstance(timeZone)
-            val lunar = ChineseCalendar(timeZone)
-            lunar.timeInMillis = solar.timeInMillis
-
-            val year = lunar.get(ChineseCalendar.YEAR)
-            val month = lunar.get(ChineseCalendar.MONTH)
-            val day = lunar.get(ChineseCalendar.DAY_OF_MONTH)
-
-            // 음력 날짜 출력
-            Log.d("Lunar Date", "${year}년 ${month + 1}월 ${day}일")
-        } else {
-
-        }
-
-    }
 }
 
 interface GoogleCalendarService{
