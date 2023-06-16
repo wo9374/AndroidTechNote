@@ -10,14 +10,14 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
     buildToolsVersion "30.0.3"
     ndkVersion "21.1.6352462"
 
     defaultConfig {
         applicationId "com.example.androidtechnote"
         minSdkVersion 21
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
 
@@ -102,11 +102,11 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
 
     //room
-    implementation "androidx.room:room-runtime:2.4.0-alpha03"
-    kapt"androidx.room:room-compiler:2.4.0-alpha03"
+    implementation "androidx.room:room-runtime:2.6.0-alpha01"
+    kapt"androidx.room:room-compiler:2.6.0-alpha01"
 
     //work
-    implementation "androidx.work:work-runtime-ktx:2.5.0"
+    implementation "androidx.work:work-runtime-ktx:2.8.1"
 
     //selection recycler
     implementation 'androidx.recyclerview:recyclerview-selection:1.1.0'
