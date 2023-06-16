@@ -29,7 +29,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidTechNote"
-        android:usesCleartextTraffic="true">
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:targetApi="n">
+
+        <activity
+            android:name=".exoplayer.ExoActivity"
+            android:exported="false" />
         <activity
             android:name=".calendar.CalendarActivity"
             android:exported="false" />

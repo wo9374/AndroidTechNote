@@ -14,6 +14,7 @@ import com.example.androidtechnote.camera.camerakit_library.CameraXActivity
 import com.example.androidtechnote.coordinator.bottomsheet.BottomSheetActivity
 import com.example.androidtechnote.coordinator.CoordinatorActivity
 import com.example.androidtechnote.databinding.ActivityMainBinding
+import com.example.androidtechnote.exoplayer.ExoActivity
 import com.example.androidtechnote.ktor.KtorActivity
 import com.example.androidtechnote.myworkmanager.WorkManagerActivity
 import com.example.androidtechnote.navigation.NavigationActivity
@@ -74,6 +75,7 @@ class MainActivity : AppCompatActivity() {
                     bleBtn.id -> {intent = Intent(applicationContext, BleScanActivity::class.java)}
                     focusBtn.id -> {intent = Intent(applicationContext, FocusActivity::class.java)}
                     calendarBtn.id -> {intent = Intent(applicationContext, CalendarActivity::class.java)}
+                    exoBtn.id -> { intent = Intent(applicationContext, ExoActivity::class.java)}
                 }
             }
             startActivity(intent)

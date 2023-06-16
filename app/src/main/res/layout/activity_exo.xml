@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".exoplayer.ExoActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.exoplayer2.ui.StyledPlayerView
+            android:id="@+id/player_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <!--
+        app:show_timeout="3000" PlayerView 사용자가 마지막으로 상호 작용 한 후 컨트롤이 숨겨지기 전까지의 지연 시간
+        -->
+
+        <!-- Custom Player
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/sub_player_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fastforward_increment="30000"
+            app:rewind_increment="30000"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/player_view"/>
+
+        빨리감기(fastforward_increment)
+        되감기(rewind_increment)
+        -->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
